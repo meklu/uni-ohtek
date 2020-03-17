@@ -1,0 +1,115 @@
+commit 4fb59e9f47ce6088861a456e0136d2d64cf9b5bf
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:36:21 2020 +0200
+
+    häröily
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 12584298270d8fd4d7408e2a391468218d6c5c4f
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:34:21 2020 +0200
+
+    fileitä kolmin kappalein
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 05c6f20f2e897ac7b33fdb293ae310ff2418c58a
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:31:03 2020 +0200
+
+    laastarointia
+
+ eka.txt    | 18 ++++--------------
+ kolmas.txt |  4 +++-
+ 2 files changed, 7 insertions(+), 15 deletions(-)
+
+commit e95b0203795457d685e8db2523a016f21a7b2684
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:28:25 2020 +0200
+
+    uud. nim.
+
+ eka.txt      | 459 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ tiedosto.txt | 459 -----------------------------------------------------------
+ 2 files changed, 459 insertions(+), 459 deletions(-)
+
+commit 862f2d643f8b998beb7ca1e2f00c23273c185e20
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:26:56 2020 +0200
+
+    toisen poisto
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 022ad3d93ae3d87bb7f72f728d3ddb3fc2c4f51d
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:26:11 2020 +0200
+
+    muocs
+
+ tiedosto.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 0bd1df1cc95c5c11556b01bf5f6740cda2482843
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:25:19 2020 +0200
+
+    paljon tekstiä
+
+ tiedosto.txt | 457 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 457 insertions(+)
+
+commit d7b7482f211c13af63a33f0a19358dbf63f4a6f2
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:22:38 2020 +0200
+
+    stuffia ja thingiä
+
+ stuff/thing | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit d2ccb0a8d187fe6400a25ce8b9bbb1fc16d3311e
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:21:58 2020 +0200
+
+    muutoksia
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 7ae3bddabdada62d94039beab352131859e47cf5
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:21:30 2020 +0200
+
+    lisätty kolmas.txt
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit cb7b36f6b33c9f69f310285c2e9ec66d5368ef40
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:20:09 2020 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit eb2cdfbce52add6e2620dc1d50fda1ee6f829086
+Author: Melker Narikka <melker.narikka@helsinki.fi>
+Date:   Tue Mar 17 23:19:06 2020 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
