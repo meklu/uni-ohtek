@@ -1,8 +1,10 @@
 
 package org.meklu.patkis;
 
+import org.meklu.patkis.ui.PatkisUi;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        PatkisUi.launch(PatkisUi.class);
     }
 }

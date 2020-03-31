@@ -10,11 +10,13 @@ public class Snippet {
     private String description = "";
     private boolean isPublic = false;
     private String snippet = "";
+    private User owner;
 
     private final Set<Tag> tags = new HashSet<>();
 
-    public Snippet(int id) {
+    public Snippet(int id, User owner) {
         this.id = id;
+        this.owner = owner;
     }
 
     public int getId() {
@@ -51,6 +53,14 @@ public class Snippet {
 
     public void setSnippet(String snippet) {
         this.snippet = snippet;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Set<Tag> getTags() {
