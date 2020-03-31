@@ -21,9 +21,9 @@ public class LoginScreen {
         this.stage.setScene(scene);
         this.stage.setTitle("Log in");
         Label userLabel = new Label("Username");
+
         TextField userField = new TextField();
         Button loginButton = new Button("Log in");
-        Button registerButton = new Button("Register an account");
         loginButton.setOnAction((_ignore) -> {
             if (!logic.login(userField.getText())) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
@@ -34,10 +34,15 @@ public class LoginScreen {
                 a.showAndWait();
                 return;
             }
-            ui.setStage(ui.registerUser.stage);
+            ui.setStage(ui.listSnippets.stage);
             userField.clear();
         });
         userField.setOnAction(loginButton.getOnAction());
+
+        Button registerButton = new Button("Register an account");
+        registerButton.setOnAction((_ignore) -> {
+            ui.setStage(ui.registerUser.stage);
+        });
 
         layout.getChildren().addAll(userLabel, userField, loginButton, registerButton);
     }

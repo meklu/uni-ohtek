@@ -1,7 +1,8 @@
 
 package org.meklu.patkis.ui;
 
-import org.meklu.patkis.domain.Logic;
+import org.meklu.patkis.dao.*;
+import org.meklu.patkis.domain.*;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -16,7 +17,7 @@ public class PatkisUi extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        logic = new Logic();
+        logic = new Logic(new SpoofUserDao(), new SpoofSnippetDao(), new SpoofTagDao());
 
         loginScreen = new LoginScreen(this);
         registerUser = new RegisterUser(this);
