@@ -1,0 +1,13 @@
+main->machine: Machine()
+machine->tank: FuelTank()
+tank-->machine: FuelTank
+machine->tank: fill(40)
+machine->engine: Engine(tank)
+engine-->machine: Engine
+main->machine: drive()
+machine->engine: start()
+engine->tank: consume(5)
+machine->engine: isRunning()
+engine-->machine: true
+machine->engine: useEnergy()
+engine->tank: consume(10)
