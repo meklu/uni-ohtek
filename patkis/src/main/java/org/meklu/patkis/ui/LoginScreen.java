@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class LoginScreen {
@@ -44,6 +45,18 @@ public class LoginScreen {
             ui.setStage(ui.registerUser.stage);
         });
 
-        layout.getChildren().addAll(userLabel, userField, loginButton, registerButton);
+        Button resetButton = new Button("Reset the database");
+        resetButton.setOnAction((_ignore) -> {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.initOwner(stage);
+            a.setTitle("Reset the database");
+            a.setContentText("Are you sure?");
+            a.showAndWait();
+            if (a.getResult() == ButtonType.OK) {
+                logic.resetDb();
+            }
+        });
+
+        layout.getChildren().addAll(userLabel, userField, loginButton, registerButton, resetButton);
     }
 }

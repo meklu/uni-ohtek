@@ -4,13 +4,16 @@ package org.meklu.patkis.domain;
 import org.meklu.patkis.dao.*;
 
 public class Logic {
+    private Database db;
+
     private UserDao ud;
     private SnippetDao sd;
     private TagDao td;
 
     private User currentUser;
 
-    public Logic(UserDao ud, SnippetDao sd, TagDao td) {
+    public Logic(Database db, UserDao ud, SnippetDao sd, TagDao td) {
+        this.db = db;
         this.ud = ud;
         this.sd = sd;
         this.td = td;
@@ -28,5 +31,13 @@ public class Logic {
 
     public void logout() {
         this.currentUser = null;
+    }
+
+    public boolean register(User user) {
+        return this.ud.save(user);
+    }
+
+    public void resetDb() {
+        this.db.reset();
     }
 }
