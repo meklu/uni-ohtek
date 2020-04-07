@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** Handles database things
  */
@@ -159,7 +160,7 @@ public class Database {
      */
     public ResultSet findWhere(String table, List<Triple<String, String, String>> whereFields, List<String> additionalOrders) {
         try {
-            String frepl = String.join(",", whereFields.stream().map(f -> f.getA() + " " + f.getB() + " ?").reduce("", (a, b) -> a + b));
+            String frepl = String.join(",", whereFields.stream().map(f -> f.getA() + " " + f.getB() + " ?").collect(Collectors.toCollection(ArrayList::new)));
             String addtl = String.join(" ", additionalOrders);
             String query = "SELECT * FROM " + table + (!whereFields.isEmpty() ? " WHERE " + frepl : "") + " " + addtl;
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -190,8 +191,8 @@ public class Database {
      */
     public boolean save(String table, List<Pair<String, String>> fields) {
         try {
-            String frepl = String.join(",", fields.stream().map(f -> "?").reduce("", (a, b) -> a + b));
-            String fnames = String.join(",", fields.stream().map(f -> f.getA()).reduce("", (a, b) -> a + b));
+            String frepl = String.join(",", fields.stream().map(f -> "?").collect(Collectors.toCollection(ArrayList::new)));
+            String fnames = String.join(",", fields.stream().map(f -> f.getA()).collect(Collectors.toCollection(ArrayList::new)));
             String query = "INSERT INTO " + table + " (" + fnames + ") VALUES (" + frepl + ")";
             PreparedStatement stmt = conn.prepareStatement(query);
             for (int i = 0; i < fields.size(); ++i) {
@@ -248,7 +249,7 @@ public class Database {
      */
     public boolean delete(String table, List<Pair<String, String>> whereFields) {
         try {
-            String frepl = String.join(" AND ", whereFields.stream().map(f -> f.getA() + "= ?").reduce("", (a, b) -> a + b));
+            String frepl = String.join(" AND ", whereFields.stream().map(f -> f.getA() + "= ?").collect(Collectors.toCollection(ArrayList::new)));
             String query = "DELETE FROM " + table + " WHERE " + frepl;
             PreparedStatement stmt = conn.prepareStatement(query);
             for (int i = 1; i <= whereFields.size(); ++i) {
