@@ -14,6 +14,7 @@ abstract public class DBDao<T> implements Dao<T> {
         this.db = db;
     }
 
+    @Override
     public T find(String field, String value) {
         ResultSet rs = db.find(this.tableName(), field, value);
         try {
@@ -26,6 +27,7 @@ abstract public class DBDao<T> implements Dao<T> {
         return this.fromResultSet(rs);
     }
 
+    @Override
     public List<T> findLike(String field, String pattern) {
         List<T> ret = new ArrayList<>();
         try {
@@ -41,6 +43,7 @@ abstract public class DBDao<T> implements Dao<T> {
         return ret;
     }
 
+    @Override
     public List<T> findWhere(List<Triple<String, String, String>> fields, List<String> additionalOrders) {
         List<T> ret = new ArrayList<>();
         try {

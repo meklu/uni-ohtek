@@ -14,10 +14,16 @@ public class Logic {
 
     public Logic(Database db, UserDao ud, SnippetDao sd, TagDao td) {
         this.db = db;
+        db.createTables();
+
         this.ud = ud;
         this.sd = sd;
         this.td = td;
         this.currentUser = null;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     public boolean login(String username) {
