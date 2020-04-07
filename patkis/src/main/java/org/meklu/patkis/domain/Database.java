@@ -53,34 +53,43 @@ public class Database {
     
     /** Starts a transaction
      */
-    public void startTransaction() throws SQLException {
-        this.conn.setAutoCommit(false);
+    public void startTransaction() {
+        try {
+            this.conn.setAutoCommit(false);
+        } catch (Exception e) {}
     }
 
     /** Commits a transaction
      */
-    public void commit() throws SQLException {
-        this.conn.commit();
-        this.conn.setAutoCommit(true);
+    public void commit() {
+        try {
+            this.conn.commit();
+            this.conn.setAutoCommit(true);
+        } catch (Exception e) {}
     }
 
     /** Rolls back a transaction
      */
-    public void rollback() throws SQLException {
-        this.conn.rollback();
-        this.conn.setAutoCommit(true);
+    public void rollback() {
+        try {
+            this.conn.rollback();
+            this.conn.setAutoCommit(true);
+        } catch (Exception e) {}
     }
 
     /** Gets the id of the last inserted row
      *
      * @return The id of the last inserted row
      */
-    public int lastId(String table) throws SQLException {
-        PreparedStatement stmt = this.conn.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = ?");
-        stmt.setString(1, table);
-        ResultSet res = stmt.executeQuery();
-        if (!res.next()) { return -1; }
-        return res.getInt("seq");
+    public int lastId(String table) {
+        try {
+            PreparedStatement stmt = this.conn.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = ?");
+            stmt.setString(1, table);
+            ResultSet res = stmt.executeQuery();
+            if (!res.next()) { return -1; }
+            return res.getInt("seq");
+        } catch (Exception e) {}
+        return -1;
     }
 
     /** Private utility function that reads a file as a string
