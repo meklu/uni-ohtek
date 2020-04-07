@@ -17,7 +17,9 @@ abstract public class DBDao<T> implements Dao<T> {
     public T find(String field, String value) {
         ResultSet rs = db.find(this.tableName(), field, value);
         try {
-            if (!rs.next()) { return null; }
+            if (!rs.next()) {
+                return null;
+            }
         } catch (Exception e) {
             return null;
         }
@@ -30,7 +32,9 @@ abstract public class DBDao<T> implements Dao<T> {
             ResultSet rs = db.findLike(this.tableName(), field, pattern);
             while (rs != null && rs.next()) {
                 T obj = fromResultSet(rs);
-                if (null == obj) { continue; }
+                if (null == obj) {
+                    continue;
+                }
                 ret.add(obj);
             }
         } catch (Exception e) {}
@@ -43,7 +47,9 @@ abstract public class DBDao<T> implements Dao<T> {
             ResultSet rs = db.findWhere(this.tableName(), fields, additionalOrders);
             while (rs != null && rs.next()) {
                 T obj = fromResultSet(rs);
-                if (null == obj) { continue; }
+                if (null == obj) {
+                    continue;
+                }
                 ret.add(obj);
             }
         } catch (Exception e) {}

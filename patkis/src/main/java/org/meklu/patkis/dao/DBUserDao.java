@@ -49,7 +49,9 @@ public class DBUserDao extends DBDao<User> implements UserDao {
     public User fromResultSet(ResultSet rs) {
         try {
             return new User(rs.getInt("id"), rs.getString("login"), rs.getString("pass"));
-        } catch (Exception e) { System.err.println("failed to convert resultset to user"); }
+        } catch (Exception e) {
+            System.err.println("failed to convert resultset to user");
+        }
         return null;
     }
 }

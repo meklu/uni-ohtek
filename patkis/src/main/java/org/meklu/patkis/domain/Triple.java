@@ -3,38 +3,38 @@ package org.meklu.patkis.domain;
 
 import java.util.Objects;
 
-public class Triple<TA, TB, TC> {
-    private TA a;
-    private TB b;
-    private TC c;
+public class Triple<A, B, C> {
+    private A a;
+    private B b;
+    private C c;
 
-    public Triple(TA a, TB b, TC c) {
+    public Triple(A a, B b, C c) {
         this.a = a;
         this.b = b;
         this.c = c;
     }
 
-    public TA getA() {
+    public A getA() {
         return a;
     }
 
-    public void setA(TA a) {
+    public void setA(A a) {
         this.a = a;
     }
 
-    public TB getB() {
+    public B getB() {
         return b;
     }
 
-    public void setB(TB b) {
+    public void setB(B b) {
         this.b = b;
     }
 
-    public TC getC() {
+    public C getC() {
         return c;
     }
 
-    public void setC(TC c) {
+    public void setC(C c) {
         this.c = c;
     }
 
@@ -52,10 +52,7 @@ public class Triple<TA, TB, TC> {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final Triple<?, ?, ?> other = (Triple<?, ?, ?>) obj;
@@ -65,10 +62,7 @@ public class Triple<TA, TB, TC> {
         if (!Objects.equals(this.b, other.b)) {
             return false;
         }
-        if (!Objects.equals(this.c, other.c)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.c, other.c);
     }
 
     @Override

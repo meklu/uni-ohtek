@@ -86,7 +86,9 @@ public class Database {
             PreparedStatement stmt = this.conn.prepareStatement("SELECT seq FROM sqlite_sequence WHERE name = ?");
             stmt.setString(1, table);
             ResultSet res = stmt.executeQuery();
-            if (!res.next()) { return -1; }
+            if (!res.next()) {
+                return -1;
+            }
             return res.getInt("seq");
         } catch (Exception e) {}
         return -1;
@@ -214,7 +216,9 @@ public class Database {
             boolean ret = this.save(table, fields);
             int id = this.lastId(table);
             this.commit();
-            if (!ret) { return -1; }
+            if (!ret) {
+                return -1;
+            }
             return id;
         } catch (Exception e) {}
         return -1;

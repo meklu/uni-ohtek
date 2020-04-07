@@ -3,28 +3,28 @@ package org.meklu.patkis.domain;
 
 import java.util.Objects;
 
-public class Pair<TA, TB> {
-    private TA a;
-    private TB b;
+public class Pair<A, B> {
+    private A a;
+    private B b;
 
-    public Pair(TA a, TB b) {
+    public Pair(A a, B b) {
         this.a = a;
         this.b = b;
     }
 
-    public TA getA() {
+    public A getA() {
         return a;
     }
 
-    public void setA(TA a) {
+    public void setA(A a) {
         this.a = a;
     }
 
-    public TB getB() {
+    public B getB() {
         return b;
     }
 
-    public void setB(TB b) {
+    public void setB(B b) {
         this.b = b;
     }
 
