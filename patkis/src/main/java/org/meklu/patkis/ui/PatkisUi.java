@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class PatkisUi extends Application {
     private Stage stage;
+    private Database database;
 
     protected LoginScreen loginScreen;
     protected RegisterUser registerUser;
@@ -17,7 +18,8 @@ public class PatkisUi extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        logic = new Logic(new SpoofUserDao(), new SpoofSnippetDao(), new SpoofTagDao());
+        database = new Database("patkisdb.db");
+        logic = new Logic(new DBUserDao(database), new SpoofSnippetDao(), new SpoofTagDao());
 
         loginScreen = new LoginScreen(this);
         registerUser = new RegisterUser(this);
