@@ -3,4 +3,5 @@
 /laskarit/viikko2/Unicafe/target/
 /laskarit/viikko2/Unicafe/nbproject/
 /patkis/target/
-/patkis/patkisdb.db
+/patkis/*.db
+/patkis/nbproject/
