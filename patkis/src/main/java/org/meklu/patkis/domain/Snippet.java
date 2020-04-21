@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Snippet {
-    private final int id;
+    private int id = -1;
     private String title = "";
     private String description = "";
     private boolean isPublic = false;
@@ -14,13 +14,16 @@ public class Snippet {
 
     private final Set<Tag> tags = new HashSet<>();
 
-    public Snippet(int id, User owner) {
-        this.id = id;
+    public Snippet(User owner) {
         this.owner = owner;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -39,11 +42,11 @@ public class Snippet {
         this.description = description;
     }
 
-    public boolean isIsPublic() {
+    public boolean isPublic() {
         return isPublic;
     }
 
-    public void setIsPublic(boolean isPublic) {
+    public void setPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
 

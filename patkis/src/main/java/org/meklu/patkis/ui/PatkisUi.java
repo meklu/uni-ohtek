@@ -19,7 +19,11 @@ public class PatkisUi extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         database = new Database("patkisdb.db");
-        logic = new Logic(database, new DBUserDao(database), new SpoofSnippetDao(), new SpoofTagDao());
+        DBUserDao ud = new DBUserDao(database);
+        DBSnippetDao sd = new DBSnippetDao(database);
+        sd.setUserDao(ud);
+        SpoofTagDao td = new SpoofTagDao();
+        logic = new Logic(database, ud, sd, td);
 
         loginScreen = new LoginScreen(this);
         registerUser = new RegisterUser(this);

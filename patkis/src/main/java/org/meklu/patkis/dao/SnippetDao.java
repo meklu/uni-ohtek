@@ -1,6 +1,7 @@
 
 package org.meklu.patkis.dao;
 
-public interface SnippetDao {
-    
+import org.meklu.patkis.domain.Snippet;
+
+public interface SnippetDao extends Dao<Snippet> {
 }

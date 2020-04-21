@@ -54,4 +54,8 @@ public class DBUserDao extends DBDao<User> implements UserDao {
         }
         return null;
     }
+
+    User findById(int id) {
+        return this.find("id", "" + id);
+    }
 }

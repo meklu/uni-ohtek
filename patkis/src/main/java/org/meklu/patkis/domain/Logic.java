@@ -1,6 +1,7 @@
 
 package org.meklu.patkis.domain;
 
+import java.util.List;
 import org.meklu.patkis.dao.*;
 
 public class Logic {
@@ -45,5 +46,9 @@ public class Logic {
 
     public void resetDb() {
         this.db.reset();
+    }
+
+    public List<Snippet> getSnippets() {
+        return this.sd.getAll();
     }
 }
