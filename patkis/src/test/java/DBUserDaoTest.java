@@ -44,6 +44,28 @@ public class DBUserDaoTest {
     }
 
     @Test
+    public void cannotDeleteUnsaved() {
+        User u = new User("foodman");
+        assertEquals(false, dud.delete(u));
+    }
+
+    @Test
+    public void canFindById() {
+        User u = new User("foodman");
+        dud.save(u);
+        User c = dud.findById(u.getId());
+        assertEquals(true, u.equals(c));
+    }
+
+    @Test
+    public void canFindByLogin() {
+        User u = new User("foodman");
+        dud.save(u);
+        User c = dud.findByLogin(u.getLogin());
+        assertEquals(true, u.equals(c));
+    }
+
+    @Test
     public void incompleteRowsFailToConvert() {
         ResultSet rs = db.find(dud.tableName(), "asdf", "yup");
         assertEquals(null, dud.fromResultSet(rs));
