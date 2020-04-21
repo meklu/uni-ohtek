@@ -2,8 +2,9 @@
 package org.meklu.patkis.domain;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -101,8 +102,9 @@ public class Database {
      * @param file The path to the file being read
      * @return The file contents
      */
-    private String readFile(String file) throws FileNotFoundException {
-        BufferedReader br = new BufferedReader(new FileReader(file));
+    private String readFile(String file) {
+        InputStream is = Database.class.getResourceAsStream("/sql/" + file);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         return br.lines().reduce("", (a, b) -> a + "\n" + b);
     }
 
@@ -319,7 +321,7 @@ public class Database {
      */
     public void dropTables() {
         try {
-            this.execFile("sql/drop_tables.sql");
+            this.execFile("drop_tables.sql");
         } catch (Exception e) {
             System.out.println("failed to drop tables: " + e.getMessage());
         }
@@ -329,7 +331,7 @@ public class Database {
      */
     public void createTables() {
         try {
-            this.execFile("sql/create_tables.sql");
+            this.execFile("create_tables.sql");
         } catch (Exception e) {
             System.out.println("failed to create tables: " + e.getMessage());
         }

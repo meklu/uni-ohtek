@@ -9,4 +9,5 @@ Pvm   | Aika      | Asia
 21.4. | 1h 30min  | Huoltotoimenpiteitä ja alustavaa koodinpätkälistanäkymän runkoa
 21.4. | 1h        | Tietokanta- ja talletusoliorakenneasiaa
 21.4. | 2h        | Testejä
-…     | 12h 45min | *Yhteensä*
+22.4. | 30min     | Tietokantamäärittelyjen tunkkaaminen Java-resursseiksi
+…     | 13h 15min | *Yhteensä*
