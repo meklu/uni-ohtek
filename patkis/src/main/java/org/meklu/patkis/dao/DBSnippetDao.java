@@ -77,7 +77,6 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
      * @return The snippet, if any was found
      */
     public Snippet findById(int id) {
-        System.out.println("id: " + id);
         return this.find("id", "" + id);
     }
 }
