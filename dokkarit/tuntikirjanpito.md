@@ -6,4 +6,5 @@ Pvm   | Aika      | Asia
 31.3. | 3h 30min  | Alustavaa ohjelmarunkoa
 7.4.  | 4h        | Tietokanta-asiaa sekä rekisteröintinäkymää
 8.4.  | 15min     | Pieniä tietokannan käyttöön liittyviä korjauksia
-…     | 8h 15min  | *Yhteensä*
+21.4. | 1h 30min  | Huoltotoimenpiteitä ja alustavaa koodinpätkälistanäkymän runkoa
+…     | 9h 45min  | *Yhteensä*
