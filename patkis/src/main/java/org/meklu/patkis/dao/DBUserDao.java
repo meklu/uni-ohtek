@@ -41,7 +41,7 @@ public class DBUserDao extends DBDao<User> implements UserDao {
             return false;
         }
         ArrayList<Pair<String, String>> l = new ArrayList<>();
-        l.add(new Pair("id", u.getId()));
+        l.add(new Pair("id", "" + u.getId()));
         return db.delete(this.tableName(), l);
     }
 

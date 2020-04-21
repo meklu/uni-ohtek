@@ -21,9 +21,9 @@ public class Database {
     private final Connection conn;
 
     /** Opens a database connection
-     * 
+     *
      * @param filename SQLite database path
-     * @throws SQLException 
+     * @throws SQLException
      */
     public Database(String filename) throws SQLException {
         this.uri = "jdbc:sqlite:" + filename;
@@ -46,12 +46,13 @@ public class Database {
      */
     public void close() {
         try {
+            this.conn.endRequest();
             this.conn.close();
         } catch (SQLException ex) {
-            System.err.println("failed to close database connection");
+            System.err.println("failed to close database connection: " + ex.getMessage());
         }
     }
-    
+
     /** Starts a transaction
      */
     public void startTransaction() {
@@ -317,7 +318,9 @@ public class Database {
     public void dropTables() {
         try {
             this.execFile("sql/drop_tables.sql");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("failed to drop tables: " + e.getMessage());
+        }
     }
 
     /** Re-creates all the tables in the database, if necessary
@@ -325,7 +328,9 @@ public class Database {
     public void createTables() {
         try {
             this.execFile("sql/create_tables.sql");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("failed to create tables: " + e.getMessage());
+        }
     }
 
     /** Resets the database

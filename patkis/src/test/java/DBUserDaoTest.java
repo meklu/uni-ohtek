@@ -1,4 +1,5 @@
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,21 +14,17 @@ import org.meklu.patkis.domain.User;
 public class DBUserDaoTest {
     private static Database db;
     private static DBUserDao dud;
-    
-    @Before
-    public void setUp() {
-        db.reset();
-    }
 
-    @BeforeClass
-    public static void setItUp() throws SQLException {
+    @Before
+    public void setItUp() throws SQLException {
         db = new Database("testdb.db");
         dud = new DBUserDao(db);
+        db.reset();
     }
 
-    @AfterClass
-    public static void closeUpShop() {
-        db.reset();
+    @After
+    public void closeUpShop() throws SQLException {
+        db.rollback();
         db.close();
     }
 
@@ -36,5 +33,19 @@ public class DBUserDaoTest {
         User u = new User("foodman");
         assertEquals(true, dud.save(u));
         assertNotNull(dud.find("id", "" + u.getId()));
+    }
+
+    @Test
+    public void deletionSucceeds() {
+        User u = new User("foodman");
+        assertEquals(true, dud.save(u));
+        assertEquals(true, dud.delete(u));
+        assertNull(dud.find("id", "" + u.getId()));
+    }
+
+    @Test
+    public void incompleteRowsFailToConvert() {
+        ResultSet rs = db.find(dud.tableName(), "asdf", "yup");
+        assertEquals(null, dud.fromResultSet(rs));
     }
 }
