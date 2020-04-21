@@ -11,8 +11,13 @@ import javafx.stage.Stage;
 import org.meklu.patkis.domain.Logic;
 import org.meklu.patkis.domain.User;
 
-public class RegisterUser {
-    protected Stage stage = new Stage();
+public class RegisterUser implements View {
+    private Stage stage = new Stage();
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
 
     RegisterUser(PatkisUi ui) {
         Logic logic = ui.logic;
@@ -36,14 +41,14 @@ public class RegisterUser {
                 return;
             }
             userField.clear();
-            ui.setStage(ui.loginScreen.stage);
+            ui.toLoginScreen();
         });
         userField.setOnAction(registerButton.getOnAction());
 
         Button backButton = new Button("Back to login screen");
         backButton.setOnAction((_ignore) -> {
             userField.clear();
-            ui.setStage(ui.loginScreen.stage);
+            ui.toLoginScreen();
         });
 
         layout.getChildren().addAll(userLabel, userField, registerButton, backButton);

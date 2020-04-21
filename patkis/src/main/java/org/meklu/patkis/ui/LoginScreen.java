@@ -12,8 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
-public class LoginScreen {
-    protected Stage stage = new Stage();
+public class LoginScreen implements View {
+    private Stage stage = new Stage();
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
 
     LoginScreen(PatkisUi ui) {
         Logic logic = ui.logic;
@@ -35,14 +40,14 @@ public class LoginScreen {
                 a.showAndWait();
                 return;
             }
-            ui.setStage(ui.listSnippets.stage);
             userField.clear();
+            ui.toSnippets();
         });
         userField.setOnAction(loginButton.getOnAction());
 
         Button registerButton = new Button("Register an account");
         registerButton.setOnAction((_ignore) -> {
-            ui.setStage(ui.registerUser.stage);
+            ui.toRegistrationScreen();
         });
 
         Button resetButton = new Button("Reset the database");

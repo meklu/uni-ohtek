@@ -25,7 +25,7 @@ public class PatkisUi extends Application {
         registerUser = new RegisterUser(this);
         listSnippets = new ListSnippets(this);
 
-        this.setStage(loginScreen.stage);
+        this.setStage(loginScreen.getStage());
     }
 
     public void setStage(Stage stage) {
@@ -37,5 +37,17 @@ public class PatkisUi extends Application {
             this.stage.hide();
         }
         this.stage = stage;
+    }
+
+    public void toLoginScreen() {
+        this.setStage(loginScreen.getStage());
+    }
+
+    public void toRegistrationScreen() {
+        this.setStage(registerUser.getStage());
+    }
+
+    public void toSnippets() {
+        this.setStage(listSnippets.getStage());
     }
 }
