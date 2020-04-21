@@ -222,7 +222,9 @@ public class Database {
                 return -1;
             }
             return id;
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("failed to save stuff to " + table + ": " + e.getMessage());
+        }
         return -1;
     }
 

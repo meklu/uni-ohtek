@@ -7,6 +7,7 @@ import java.util.List;
 import org.meklu.patkis.domain.Database;
 import org.meklu.patkis.domain.Pair;
 import org.meklu.patkis.domain.Snippet;
+import org.meklu.patkis.domain.User;
 
 public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
     private DBUserDao userDao = null;
@@ -44,13 +45,13 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
     }
 
     @Override
-    public boolean delete(Snippet obj) {
-        if (obj.getId() == -1) {
+    public boolean delete(Snippet s) {
+        if (s.getId() == -1) {
             System.err.println("tried to delete object not yet saved in db");
             return false;
         }
         ArrayList<Pair<String, String>> l = new ArrayList<>();
-        l.add(new Pair("id", obj.getId()));
+        l.add(new Pair("id", "" + s.getId()));
         return db.delete(this.tableName(), l);
     }
 
@@ -68,5 +69,15 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
             System.err.println("failed to convert resultset to snippet");
         }
         return null;
+    }
+
+    /** Finds a Snippet by id
+     *
+     * @param id
+     * @return The snippet, if any was found
+     */
+    public Snippet findById(int id) {
+        System.out.println("id: " + id);
+        return this.find("id", "" + id);
     }
 }

@@ -8,4 +8,5 @@ Pvm   | Aika      | Asia
 8.4.  | 15min     | Pieniä tietokannan käyttöön liittyviä korjauksia
 21.4. | 1h 30min  | Huoltotoimenpiteitä ja alustavaa koodinpätkälistanäkymän runkoa
 21.4. | 1h        | Tietokanta- ja talletusoliorakenneasiaa
-…     | 10h 45min  | *Yhteensä*
+21.4. | 2h        | Testejä
+…     | 12h 45min | *Yhteensä*

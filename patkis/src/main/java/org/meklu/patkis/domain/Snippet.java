@@ -2,6 +2,7 @@
 package org.meklu.patkis.domain;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Snippet {
@@ -68,5 +69,54 @@ public class Snippet {
 
     public Set<Tag> getTags() {
         return tags;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 13 * hash + this.id;
+        hash = 13 * hash + Objects.hashCode(this.title);
+        hash = 13 * hash + Objects.hashCode(this.description);
+        hash = 13 * hash + (this.isPublic ? 1 : 0);
+        hash = 13 * hash + Objects.hashCode(this.snippet);
+        hash = 13 * hash + Objects.hashCode(this.owner);
+        hash = 13 * hash + Objects.hashCode(this.tags);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Snippet other = (Snippet) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.isPublic != other.isPublic) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.snippet, other.snippet)) {
+            return false;
+        }
+        if (!Objects.equals(this.owner, other.owner)) {
+            return false;
+        }
+        if (!Objects.equals(this.tags, other.tags)) {
+            return false;
+        }
+        return true;
     }
 }
