@@ -21,8 +21,8 @@ public class ListSnippets implements View {
         Logic logic = ui.logic;
         VBox layout = new VBox();
         Scene scene = new Scene(layout, 512.0, 512.0);
-        this.stage.setTitle("Snippets - Pätkis");
         this.stage.setScene(scene);
+        this.stage.setTitle("Snippets - Pätkis");
 
         TableView table = new TableView();
         TableColumn title = new TableColumn("Title");

@@ -25,7 +25,7 @@ public class LoginScreen implements View {
         VBox layout = new VBox();
         Scene scene = new Scene(layout, 380.0, 380.0);
         this.stage.setScene(scene);
-        this.stage.setTitle("Log in");
+        this.stage.setTitle("Log in - Pätkis");
         Label userLabel = new Label("Username");
 
         TextField userField = new TextField();

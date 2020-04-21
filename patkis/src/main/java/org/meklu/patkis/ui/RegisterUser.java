@@ -24,7 +24,7 @@ public class RegisterUser implements View {
         VBox layout = new VBox();
         Scene scene = new Scene(layout, 380.0, 380.0);
         this.stage.setScene(scene);
-        this.stage.setTitle("Register");
+        this.stage.setTitle("Register - Pätkis");
         Label userLabel = new Label("Username");
 
         TextField userField = new TextField();
