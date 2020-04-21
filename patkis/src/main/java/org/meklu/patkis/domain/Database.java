@@ -262,6 +262,54 @@ public class Database {
         return false;
     }
 
+    /** Updates a row
+     *
+     * @param table The table to update in
+     * @param field The field to update by
+     * @param value The value to update by
+     * @param updateFields The fields to update
+     * @return Whether we succeeded
+     */
+    public boolean update(String table, String field, String value, List<Pair<String, String>> updateFields) {
+        try {
+            ArrayList<Pair<String, String>> l = new ArrayList<>();
+            l.add(new Pair(field, value));
+            return this.update(table, updateFields, l);
+        } catch (Exception e) {}
+        return false;
+    }
+
+    /** Updates a row in the database
+     *
+     * @param table The table to update the record in
+     * @param updateFields A list of pairs of (field, value) to update
+     * @param whereFields The fields according to which the row is updated as (key, value) pairs. These are ANDed.
+     * @return Whether we succeeded or not
+     */
+    public boolean update(String table, List<Pair<String, String>> updateFields, List<Pair<String, String>> whereFields) {
+        try {
+            if (whereFields.isEmpty()) {
+                System.out.println("not going to update without specifying WHERE fields");
+                return false;
+            }
+            String frepl = String.join(",", updateFields.stream().map(f -> f.getA() + " = ?").collect(Collectors.toList()));
+            String fwrepl = String.join(",", whereFields.stream().map(f -> f.getA() + " = ?").collect(Collectors.toList()));
+            String query = "UPDATE " + table + " SET " + frepl + " WHERE " + fwrepl;
+            PreparedStatement stmt = conn.prepareStatement(query);
+            int off = 1;
+            for (int i = 0; i < updateFields.size(); ++i) {
+                stmt.setString(off + i, updateFields.get(i).getB());
+            }
+            off += updateFields.size();
+            for (int i = 0; i < whereFields.size(); ++i) {
+                stmt.setString(off + i, whereFields.get(i).getB());
+            }
+            stmt.execute();
+            return stmt.getUpdateCount() > 0;
+        } catch (Exception e) {}
+        return false;
+    }
+
     /** Drops all the tables in the database
      *
      * CAUTION: Removes everything!
