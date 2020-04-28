@@ -2,7 +2,6 @@
 package org.meklu.patkis.domain;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -115,7 +114,7 @@ public class Database {
      *
      * @param file The path to the executed file
      */
-    private void execFile(String file) throws SQLException, FileNotFoundException {
+    private void execFile(String file) throws SQLException {
         this.startTransaction();
         String[] parts = readFile(file).split(";");
         for (String p : parts) {
