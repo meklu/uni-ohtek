@@ -13,6 +13,7 @@ Tämän harjoitustyön aiheena on koodinpätkämanageri.
 # Releaset
 
 [Viikko 5](https://github.com/meklu/uni-ohtek/releases/tag/viikko5.1)
+[Viikko 6](https://github.com/meklu/uni-ohtek/releases/tag/viikko6)
 
 # Ajo-ohjeita
 
