@@ -299,7 +299,7 @@ public class Database {
                 return false;
             }
             String frepl = String.join(",", updateFields.stream().map(f -> f.getA() + " = ?").collect(Collectors.toList()));
-            String fwrepl = String.join(",", whereFields.stream().map(f -> f.getA() + " = ?").collect(Collectors.toList()));
+            String fwrepl = String.join(" AND ", whereFields.stream().map(f -> f.getA() + " = ?").collect(Collectors.toList()));
             String query = "UPDATE " + table + " SET " + frepl + " WHERE " + fwrepl;
             PreparedStatement stmt = conn.prepareStatement(query);
             int off = 1;
