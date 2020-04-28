@@ -2,6 +2,7 @@
 package org.meklu.patkis.ui;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
@@ -30,7 +31,14 @@ public class ListSnippets implements View {
         TableColumn code = new TableColumn("Code");
         table.getColumns().addAll(title, desc, code);
 
-        layout.getChildren().addAll(table);
+        Button logout = new Button("Log out");
+        logout.setOnAction((_ignore) -> {
+            //TODO: empty out the table
+            logic.logout();
+            ui.toLoginScreen();
+        });
+
+        layout.getChildren().addAll(logout, table);
 
         layout.setMinWidth(layout.getPrefWidth());
         layout.setMinHeight(layout.getPrefHeight());

@@ -28,9 +28,9 @@ suurempioikeuksista sisällönhallintaa.
 
 ### Kirjautumisen jälkeen
 
-- [ ] Käyttäjä näkee yleiskatsauksen viimeisimmistä koodinpätkistään
+- [x] Käyttäjä näkee yleiskatsauksen viimeisimmistä koodinpätkistään
 	- [x] näkymärunko
-	- [ ] datan populointi
+	- [ ] datan populointi näkymään
 - [ ] Käyttäjä voi lisätä uuden koodinpätkän
 	- [ ] mikäli koodinpätkää ei määritellä julkiseksi, näkyy se vain
 	  käyttäjälle itselleen
@@ -42,7 +42,7 @@ suurempioikeuksista sisällönhallintaa.
 		- jokin muu erittäin kuvaava deskriptori
 - [ ] Käyttäjä voi selata koodinpätkiä tunnisteiden mukaan
 - [ ] Käyttäjä voi poistaa luomansa koodinpätkän
-- [ ] Käyttäjä voi kirjautua ulos
+- [x] Käyttäjä voi kirjautua ulos
 
 ## Jatkokehitysideoita
 
