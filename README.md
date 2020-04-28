@@ -8,6 +8,8 @@ Tämän harjoitustyön aiheena on koodinpätkämanageri.
 
 [Arkkitehtuuri](https://github.com/meklu/uni-ohtek/blob/master/dokkarit/arkkitehtuuri.md)
 
+[Käyttöohje](https://github.com/meklu/uni-ohtek/blob/master/dokkarit/käyttöohje.md)
+
 # Releaset
 
 [Viikko 5](https://github.com/meklu/uni-ohtek/releases/tag/viikko5.1)
