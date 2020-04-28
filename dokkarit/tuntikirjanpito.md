@@ -11,4 +11,5 @@ Pvm   | Aika      | Asia
 21.4. | 2h        | Testejä
 22.4. | 30min     | Tietokantamäärittelyjen tunkkaaminen Java-resursseiksi
 28.4. | 30min     | Pieniä huoltotoimenpiteitä ja dokumentaatiota
-…     | 13h 45min | *Yhteensä*
+28.4. | 30min     | Javadoc-juttuja
+…     | 14h 15min | *Yhteensä*
