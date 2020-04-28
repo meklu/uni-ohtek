@@ -1,6 +1,7 @@
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -85,5 +86,50 @@ public class DBSnippetDaoTest {
 
         assertEquals(true, dsd.update(s));
         assertTrue(s.equals(dsd.findById(s.getId())));
+    }
+
+    @Test
+    public void rollingUpdateSucceeds() {
+        Snippet s = new Snippet(u);
+        assertEquals(true, dsd.save(s));
+
+        User u2 = new User("asdfa");
+        assertEquals(true, dud.save(u2));
+
+        s.setOwner(u2);
+        assertEquals(true, dsd.update(s));
+        s.setTitle("ayup");
+        assertEquals(true, dsd.update(s));
+        s.setDescription("foo");
+        assertEquals(true, dsd.update(s));
+        s.setPublic(true);
+        assertEquals(true, dsd.update(s));
+        s.setSnippet(":(){:|:&};:");
+        assertEquals(true, dsd.update(s));
+
+        assertTrue(s.equals(dsd.findById(s.getId())));
+    }
+
+    @Test
+    public void correctSnippetsAreAvailable() {
+        assertEquals(true, dsd.getAvailableSnippets(null).isEmpty());
+
+        Snippet s = new Snippet(u);
+        assertEquals(true, dsd.save(s));
+        Snippet s1 = new Snippet(u);
+        assertEquals(true, dsd.save(s1));
+
+        User u2 = new User("asdfa");
+        assertEquals(true, dud.save(u2));
+        Snippet s2 = new Snippet(u2);
+        assertEquals(true, dsd.save(s2));
+
+        List<Snippet> ss = dsd.getAvailableSnippets(u);
+        assertEquals(2, ss.size());
+
+        s2.setPublic(true);
+        dsd.save(s2);
+        ss = dsd.getAvailableSnippets(u);
+        assertEquals(3, ss.size());
     }
 }

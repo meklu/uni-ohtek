@@ -7,6 +7,7 @@ import java.util.List;
 import org.meklu.patkis.domain.Database;
 import org.meklu.patkis.domain.Pair;
 import org.meklu.patkis.domain.Snippet;
+import org.meklu.patkis.domain.Triple;
 import org.meklu.patkis.domain.User;
 
 public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
@@ -82,10 +83,25 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
 
     /** Finds a Snippet by id
      *
-     * @param id
+     * @param id The id of the snippet you want to find
      * @return The snippet, if any was found
      */
     public Snippet findById(int id) {
         return this.find("id", "" + id);
+    }
+
+    @Override
+    public List<Snippet> getAvailableSnippets(User u) {
+        if (null == u) {
+            return new ArrayList<>();
+        }
+        List<Triple<String, String, String>> fields = new ArrayList<>();
+        fields.add(new Triple<>("owner_id", "=", "" + u.getId()));
+
+        List<String> addtl = new ArrayList<>();
+        addtl.add("OR is_public = '1'");
+        addtl.add("ORDER BY created DESC");
+
+        return this.findWhere(fields, addtl);
     }
 }

@@ -42,7 +42,7 @@ public class Logic {
 
     /** Logs in a user by username
      *
-     * @param username
+     * @param username The username of the user to log in as
      * @return True if the user was successfully logged in, false otherwise
      */
     public boolean login(String username) {
@@ -79,8 +79,7 @@ public class Logic {
      *
      * @return The list of Snippets available
      */
-    public List<Snippet> getSnippets() {
-        //FIXME: implement properly
-        return this.sd.getAll();
+    public List<Snippet> getAvailableSnippets() {
+        return this.sd.getAvailableSnippets(this.currentUser);
     }
 }

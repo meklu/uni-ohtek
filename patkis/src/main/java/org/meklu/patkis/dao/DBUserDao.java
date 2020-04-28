@@ -61,7 +61,7 @@ public class DBUserDao extends DBDao<User> implements UserDao {
 
     /** Finds a User by id
      *
-     * @param id
+     * @param id The id of the user you want to find
      * @return The user, if any was found
      */
     public User findById(int id) {
