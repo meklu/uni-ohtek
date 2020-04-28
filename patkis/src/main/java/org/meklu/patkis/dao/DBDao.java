@@ -7,9 +7,18 @@ import java.util.List;
 import org.meklu.patkis.domain.Database;
 import org.meklu.patkis.domain.Triple;
 
+/** Serves as a base class for DB-backed Data Access Objects
+ * with some useful default methods
+ *
+ * @param <T> The model type to implement this for
+ */
 abstract public class DBDao<T> implements Dao<T> {
     protected Database db;
 
+    /** Constructs a DBDao
+     *
+     * @param db The Database object to use for this DBDao
+     */
     public DBDao(Database db) {
         this.db = db;
     }
