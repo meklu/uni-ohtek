@@ -6,6 +6,8 @@ Tämän harjoitustyön aiheena on koodinpätkämanageri.
 
 [Tuntikirjanpito](https://github.com/meklu/uni-ohtek/blob/master/dokkarit/tuntikirjanpito.md)
 
+[Arkkitehtuuri](https://github.com/meklu/uni-ohtek/blob/master/dokkarit/arkkitehtuuri.md)
+
 # Releaset
 
 [Viikko 5](https://github.com/meklu/uni-ohtek/releases/tag/viikko5.1)
