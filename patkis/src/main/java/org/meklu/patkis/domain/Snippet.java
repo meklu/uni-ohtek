@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/** Serves as the data model for code snippets
+ *
+ * @see User
+ */
 public class Snippet {
     private int id = -1;
     private String title = "";
@@ -15,6 +19,10 @@ public class Snippet {
 
     private final Set<Tag> tags = new HashSet<>();
 
+    /** Instantiates a Snippet object
+     *
+     * @param owner The User to set as the owner of this Snippet
+     */
     public Snippet(User owner) {
         this.owner = owner;
     }
@@ -114,9 +122,6 @@ public class Snippet {
         if (!Objects.equals(this.owner, other.owner)) {
             return false;
         }
-        if (!Objects.equals(this.tags, other.tags)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.tags, other.tags);
     }
 }

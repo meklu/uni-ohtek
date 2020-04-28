@@ -3,15 +3,27 @@ package org.meklu.patkis.domain;
 
 import java.util.Objects;
 
+/** Serves as the data model for users
+ */
 public class User {
     private int id;
     private final String login;
     private String pass;
 
+    /** Instantiates a User object
+     *
+     * @param login The login name to use
+     */
     public User(String login) {
         this(-1, login, "");
     }
 
+    /** Instantiates a User object
+     *
+     * @param id The id of this object in the database
+     * @param login The login name
+     * @param pass The password
+     */
     public User(int id, String login, String pass) {
         this.id = id;
         this.login = login;
@@ -57,9 +69,6 @@ public class User {
             return false;
         }
         final User other = (User) obj;
-        if (!Objects.equals(this.login, other.login)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.login, other.login);
     }
 }

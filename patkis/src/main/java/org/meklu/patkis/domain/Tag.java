@@ -3,6 +3,10 @@ package org.meklu.patkis.domain;
 
 import java.util.Objects;
 
+/** Serves as the data model for tags to apply to snippets
+ *
+ * @see Snippet
+ */
 public class Tag implements Comparable {
     private final String tag;
 
