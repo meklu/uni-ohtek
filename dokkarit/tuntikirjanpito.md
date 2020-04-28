@@ -10,4 +10,5 @@ Pvm   | Aika      | Asia
 21.4. | 1h        | Tietokanta- ja talletusoliorakenneasiaa
 21.4. | 2h        | Testejä
 22.4. | 30min     | Tietokantamäärittelyjen tunkkaaminen Java-resursseiksi
-…     | 13h 15min | *Yhteensä*
+28.4. | 30min     | Pieniä huoltotoimenpiteitä ja dokumentaatiota
+…     | 13h 45min | *Yhteensä*

@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.meklu.patkis.domain.Triple;
 
+/** The basic Data Access Object template
+ *
+ * @param <T> The type of data model to deal with
+ */
 public interface Dao<T> {
     /** @return The name of the database table for the Model */
     String tableName();
@@ -48,6 +52,4 @@ public interface Dao<T> {
     /** Deletes an object from the database
      * @return Whether the operation was successful or not */
     boolean delete(T obj);
-    /** Returns an object based on a DB result */
-    T fromResultSet(ResultSet rs);
 }

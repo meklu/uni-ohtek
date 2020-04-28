@@ -3,10 +3,20 @@ package org.meklu.patkis.domain;
 
 import java.util.Objects;
 
+/** Utility class for generating two-item tuples of varying types
+ *
+ * @param <A> The data type for Triple.a
+ * @param <B> The data type for Triple.b
+ */
 public class Pair<A, B> {
     private A a;
     private B b;
 
+    /** Constructs a Pair
+     *
+     * @param a The first member of this Pair
+     * @param b The second member of this Pair
+     */
     public Pair(A a, B b) {
         this.a = a;
         this.b = b;
@@ -51,10 +61,7 @@ public class Pair<A, B> {
         if (!Objects.equals(this.a, other.a)) {
             return false;
         }
-        if (!Objects.equals(this.b, other.b)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.b, other.b);
     }
 
     @Override

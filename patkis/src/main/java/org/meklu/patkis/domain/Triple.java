@@ -3,11 +3,23 @@ package org.meklu.patkis.domain;
 
 import java.util.Objects;
 
+/** Utility class for generating three-item tuples of varying types
+ *
+ * @param <A> The data type for Triple.a
+ * @param <B> The data type for Triple.b
+ * @param <C> The data type for Triple.c
+ */
 public class Triple<A, B, C> {
     private A a;
     private B b;
     private C c;
 
+    /** Constructs a Triple
+     *
+     * @param a The first member of this Triple
+     * @param b The second member of this Triple
+     * @param c The third member of this Triple
+     */
     public Triple(A a, B b, C c) {
         this.a = a;
         this.b = b;

@@ -33,3 +33,7 @@ Tämä generoi jar-paketin polkuun `target/patkis-1.0-SNAPSHOT.jar`
 ## Checkstyle
 
 `mvn jxr:jxr checkstyle:checkstyle`
+
+## Javadoc
+
+`mvn javadoc:javadoc`

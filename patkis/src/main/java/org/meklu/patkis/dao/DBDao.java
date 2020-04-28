@@ -58,4 +58,11 @@ abstract public class DBDao<T> implements Dao<T> {
         } catch (Exception e) {}
         return ret;
     }
+
+    /** Returns an object based on a DB result
+     *
+     * @param rs The ResultSet to try and convert into an object of type T
+     * @return An object of type T or null if conversion fails
+     */
+    abstract public T fromResultSet(ResultSet rs);
 }
