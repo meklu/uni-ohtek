@@ -27,6 +27,7 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
 
     @Override
     public boolean save(Snippet s) {
+        //TODO: We'll want to save the tag list here as well at some point
         List<Pair<String, String>> fields = new ArrayList<>();
         fields.add(new Pair<>("title", s.getTitle()));
         fields.add(new Pair<>("description", s.getDescription()));
@@ -40,8 +41,16 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
     }
 
     @Override
-    public boolean update(Snippet obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean update(Snippet s) {
+        //TODO: We'll want to update the tag list here as well at some point
+        List<Pair<String, String>> fields = new ArrayList<>();
+        fields.add(new Pair<>("title", s.getTitle()));
+        fields.add(new Pair<>("description", s.getDescription()));
+        fields.add(new Pair<>("snippet", s.getSnippet()));
+        fields.add(new Pair<>("is_public", s.isPublic() ? "1" : "0"));
+        fields.add(new Pair<>("owner_id", s.getOwner().getId() + ""));
+
+        return db.update(this.tableName(), "id", "" + s.getId(), fields);
     }
 
     @Override

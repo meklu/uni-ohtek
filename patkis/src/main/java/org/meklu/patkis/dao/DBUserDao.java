@@ -31,7 +31,11 @@ public class DBUserDao extends DBDao<User> implements UserDao {
 
     @Override
     public boolean update(User u) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Pair<String, String>> fields = new ArrayList<>();
+        fields.add(new Pair<>("login", u.getLogin()));
+        fields.add(new Pair<>("pass", u.getPass()));
+
+        return db.update(this.tableName(), "id", "" + u.getId(), fields);
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class User {
     private int id;
-    private final String login;
+    private String login;
     private String pass;
 
     /** Instantiates a User object
@@ -40,6 +40,10 @@ public class User {
 
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPass() {

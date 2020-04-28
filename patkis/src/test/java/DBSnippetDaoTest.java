@@ -68,4 +68,22 @@ public class DBSnippetDaoTest {
         ResultSet rs = db.find(dsd.tableName(), "asdf", "yup");
         assertEquals(null, dsd.fromResultSet(rs));
     }
+
+    @Test
+    public void updateSucceeds() {
+        Snippet s = new Snippet(u);
+        assertEquals(true, dsd.save(s));
+
+        User u2 = new User("asdfa");
+        assertEquals(true, dud.save(u2));
+
+        s.setOwner(u2);
+        s.setTitle("ayup");
+        s.setDescription("foo");
+        s.setPublic(true);
+        s.setSnippet(":(){:|:&};:");
+
+        assertEquals(true, dsd.update(s));
+        assertTrue(s.equals(dsd.findById(s.getId())));
+    }
 }

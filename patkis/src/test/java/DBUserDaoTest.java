@@ -68,4 +68,14 @@ public class DBUserDaoTest {
         ResultSet rs = db.find(dud.tableName(), "asdf", "yup");
         assertEquals(null, dud.fromResultSet(rs));
     }
+
+    @Test
+    public void updateSucceeds() {
+        User u = new User("foodman");
+        assertEquals(true, dud.save(u));
+        u.setLogin("namdoof");
+        u.setPass("blech");
+        assertEquals(true, dud.update(u));
+        assertTrue(u.equals(dud.findByLogin("namdoof")));
+    }
 }
