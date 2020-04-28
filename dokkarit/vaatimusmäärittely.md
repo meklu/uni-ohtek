@@ -19,27 +19,30 @@ suurempioikeuksista sisällönhallintaa.
 
 ### Ennen kirjautumista
 
-- Käyttäjä voi luoda käyttäjätunnuksen
-	- tunnuksen täytyy olla uniikki ja vähintään `n` -merkkinen
-- Käyttäjä voi kirjautua sisään
-	- kirjautuminen tapahtuu kirjoittamalla tunnukset
+- [x] Käyttäjä voi luoda käyttäjätunnuksen
+	- [x] tunnuksen täytyy olla uniikki
+	- [ ] ja vähintään `n` -merkkinen
+- [x] Käyttäjä voi kirjautua sisään
+	- [x] kirjautuminen tapahtuu kirjoittamalla tunnukset
 	  kirjautumislomakkeeseen
 
 ### Kirjautumisen jälkeen
 
-- Käyttäjä näkee yleiskatsauksen viimeisimmistä koodinpätkistään
-- Käyttäjä voi lisätä uuden koodinpätkän
-	- mikäli koodinpätkää ei määritellä julkiseksi, näkyy se vain
+- [ ] Käyttäjä näkee yleiskatsauksen viimeisimmistä koodinpätkistään
+	- [x] näkymärunko
+	- [ ] datan populointi
+- [ ] Käyttäjä voi lisätä uuden koodinpätkän
+	- [ ] mikäli koodinpätkää ei määritellä julkiseksi, näkyy se vain
 	  käyttäjälle itselleen
-- Käyttäjä voi asettaa koodinpätkälle sanamuotoisia *tunnisteita*, jotka
+- [ ] Käyttäjä voi asettaa koodinpätkälle sanamuotoisia *tunnisteita*, jotka
   auttavat oikean koodinpätkän löytämisessä
 	- tunniste voi olla esim. jokin seuraavista:
 		- ohjelmointikieli
 		- aihealue
 		- jokin muu erittäin kuvaava deskriptori
-- Käyttäjä voi selata koodinpätkiä tunnisteiden mukaan
-- Käyttäjä voi poistaa luomansa koodinpätkän
-- Käyttäjä voi kirjautua ulos
+- [ ] Käyttäjä voi selata koodinpätkiä tunnisteiden mukaan
+- [ ] Käyttäjä voi poistaa luomansa koodinpätkän
+- [ ] Käyttäjä voi kirjautua ulos
 
 ## Jatkokehitysideoita
 
