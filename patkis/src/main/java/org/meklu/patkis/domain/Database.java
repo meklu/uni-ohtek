@@ -24,7 +24,8 @@ public class Database {
     /** Opens a database connection
      *
      * @param filename SQLite database path
-     * @throws SQLException
+     * @throws SQLException Throws an exception if something goes wrong with
+     *         opening a database connection
      */
     public Database(String filename) throws SQLException {
         this.uri = "jdbc:sqlite:" + filename;
@@ -82,6 +83,7 @@ public class Database {
 
     /** Gets the id of the last inserted row
      *
+     * @param table The table to deal with
      * @return The id of the last inserted row
      */
     public int lastId(String table) {
@@ -178,8 +180,8 @@ public class Database {
 
     /** Finds rows where the given fields match the given values according to the provided operator
      *
-     * @param table
-     * @param whereFields
+     * @param table The table to look into
+     * @param whereFields The fields to look by as (field, operator, value)
      * @return Possibly a ResultSet
      */
     public ResultSet findWhere(String table, List<Triple<String, String, String>> whereFields) {
