@@ -92,6 +92,8 @@ public class Snippet {
         return hash;
     }
 
+    // This auto-generated method is just a tad too long
+    @SuppressWarnings("checkstyle:MethodLength")
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -4,8 +4,10 @@
     <!-- asetetaan kieliasetukset englanniksi. -->
     <property name="localeCountry" value="EN"/>
     <property name="localeLanguage" value="en"/>
+    <module name='SuppressWarningsFilter' />
     <module name='TreeWalker'>
         <property name='tabWidth' value='4' />
+        <module name='SuppressWarningsHolder' />
         <!-- Block Checks -->
         <module name='EmptyBlock' />
         <module name='LeftCurly' />
@@ -68,6 +70,6 @@
     </module>
     <!-- Excluded files -->
     <module name="SuppressionFilter">
-    	<property name="file" value="skipped_files.xml" />
+        <property name="file" value="skipped_files.xml" />
     </module>
 </module>

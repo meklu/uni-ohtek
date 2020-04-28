@@ -292,6 +292,7 @@ public class Database {
      * @param whereFields The fields according to which the row is updated as (key, value) pairs. These are ANDed.
      * @return Whether we succeeded or not
      */
+    @SuppressWarnings("checkstyle:MethodLength") // Just a couple of lines too long for our general ruleset
     public boolean update(String table, List<Pair<String, String>> updateFields, List<Pair<String, String>> whereFields) {
         try {
             if (whereFields.isEmpty()) {

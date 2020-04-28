@@ -13,4 +13,5 @@ Pvm   | Aika      | Asia
 28.4. | 30min     | Pieniä huoltotoimenpiteitä ja dokumentaatiota
 28.4. | 30min     | Javadoc-juttuja
 28.4. | 1h 50min  | Koodin dokumentointia, testejä, alustavia päivitysrutiineja
-…     | 16h 5min  | *Yhteensä*
+28.4. | 10min     | Parin ikävän checkstyle-varoituksen metodikohtainen poiskytkentä
+…     | 16h 15min  | *Yhteensä*
