@@ -15,4 +15,5 @@ Pvm   | Aika      | Asia
 28.4. | 1h 50min  | Koodin dokumentointia, testejä, alustavia päivitysrutiineja
 28.4. | 10min     | Parin ikävän checkstyle-varoituksen metodikohtainen poiskytkentä
 28.4. | 1h 20min  | Uloskirjautumisnappi, alustava arkkitehtuuriasiakirja sekä käyttöohje
-…     | 17h 35min | *Yhteensä*
+10.5. | 4h 20min  | Tunnistejuttuja relaatioineen
+…     | 21h 55min | *Yhteensä*
