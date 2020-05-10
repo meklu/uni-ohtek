@@ -5,6 +5,8 @@ import org.meklu.patkis.dao.*;
 import org.meklu.patkis.domain.*;
 
 import javafx.application.Application;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.stage.Stage;
 
 public class PatkisUi extends Application {
@@ -56,5 +58,12 @@ public class PatkisUi extends Application {
     public void toSnippets() {
         listSnippets.refreshSnippets();
         this.setStage(listSnippets.getStage());
+    }
+
+    public void copyToClipboard(String s) {
+        Clipboard clippy = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(s);
+        clippy.setContent(content);
     }
 }
