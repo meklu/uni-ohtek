@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -21,9 +22,11 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import org.meklu.patkis.domain.Logic;
 
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.meklu.patkis.domain.Snippet;
 
 public class ListSnippets implements View {
@@ -69,6 +72,8 @@ public class ListSnippets implements View {
         this.stage.setScene(scene);
         this.stage.setTitle("Snippets - Pätkis");
 
+        Font monoFont = Font.font("monospace");
+
         TableView table = new TableView();
         TableColumn title = new TableColumn("Title");
         TableColumn desc = new TableColumn("Description");
@@ -90,6 +95,18 @@ public class ListSnippets implements View {
         code.setCellValueFactory(
             new PropertyValueFactory<Snippet, String>("snippet")
         );
+        code.setCellFactory(new Callback<TableColumn, TableCell>() {
+            public TableCell call(TableColumn param) {
+                return new TableCell<Snippet, String>() {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        this.setFont(monoFont);
+                        this.setText(item);
+                    }
+                };
+            }
+        });
 
         table.setItems(this.snippets);
 
@@ -136,6 +153,7 @@ public class ListSnippets implements View {
         addSnippet = new TextArea();
         addSnippet.setPromptText("<code>");
         addSnippet.setFocusTraversable(true);
+        addSnippet.setFont(monoFont);
 
         addPublic = new CheckBox();
         addPublic.setSelected(false);
