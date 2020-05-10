@@ -64,13 +64,36 @@ public class ListSnippets implements View {
         }
     }
 
-    private void editTableSnippet(TableView table, PatkisUi ui) {
+    private void editTableSnippet(TableView table) {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
             this.startEdit(this.snippets.get(row));
         } catch (Exception e) {
             System.out.println("failed to start snippet edit, possibly no focus");
         }
+    }
+
+    private void saveOrUpdateSnippet() {
+        Snippet s;
+        if (this.editSnippet != null) {
+            s = this.editSnippet;
+        } else {
+            s = new Snippet(logic.getCurrentUser());
+        }
+        s.setTitle(addTitle.getText());
+        s.setDescription(addDescription.getText());
+        s.setSnippet(addSnippet.getText());
+        s.setPublic(addPublic.isSelected());
+        boolean succ;
+        if (s.getId() == -1) {
+            succ = logic.createSnippet(s);
+        } else {
+            succ = logic.updateSnippet(s);
+        }
+        if (succ) {
+            this.clearFormElements();
+        }
+        this.refreshSnippets();
     }
 
     private void clearFormElements() {
@@ -80,6 +103,9 @@ public class ListSnippets implements View {
         addPublic.setSelected(false);
         addBtn.setText(addStr);
         this.editSnippet = null;
+        cancelBtn.setVisible(false);
+        cancelBtn.setManaged(false);
+        addTitle.requestFocus();
     }
 
     private void startEdit(Snippet s) {
@@ -159,7 +185,7 @@ public class ListSnippets implements View {
 
         Button editBtn = new Button("Edit");
         copyBtn.setOnAction(eh -> {
-            this.editTableSnippet(table, ui);
+            this.editTableSnippet(table);
         });
 
         menubar.getChildren().addAll(copyBtn, editBtn, logout);
@@ -181,12 +207,12 @@ public class ListSnippets implements View {
             if (copyKCC.match(e)) {
                 this.copyToClipboard(table, ui);
             } else if (e.getCode() == KeyCode.ENTER) {
-                this.editTableSnippet(table, ui);
+                this.editTableSnippet(table);
             }
         });
         table.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                this.editTableSnippet(table, ui);
+                this.editTableSnippet(table);
             }
         });
 
@@ -211,37 +237,14 @@ public class ListSnippets implements View {
 
         addBtn = new Button("Add snippet");
         addBtn.setOnAction(e -> {
-            Snippet s;
-            if (this.editSnippet != null) {
-                s = this.editSnippet;
-            } else {
-                s = new Snippet(logic.getCurrentUser());
-            }
-            s.setTitle(addTitle.getText());
-            s.setDescription(addDescription.getText());
-            s.setSnippet(addSnippet.getText());
-            s.setPublic(addPublic.isSelected());
-            boolean succ;
-            if (s.getId() == -1) {
-                succ = logic.createSnippet(s);
-            } else {
-                succ = logic.updateSnippet(s);
-            }
-            if (succ) {
-                this.clearFormElements();
-            }
-            this.refreshSnippets();
+            this.saveOrUpdateSnippet();
         });
 
         cancelBtn = new Button("Cancel edit");
         cancelBtn.setCancelButton(true);
         cancelBtn.setOnAction(e -> {
-            this.editSnippet = null;
             this.clearFormElements();
-            cancelBtn.setVisible(false);
-            cancelBtn.setManaged(false);
         });
-        cancelBtn.getOnAction().handle(null);
 
         addTitle.setOnAction(e -> {
             addDescription.requestFocus();
@@ -254,9 +257,9 @@ public class ListSnippets implements View {
         KeyCodeCombination cancelKCC = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
         adder.setOnKeyPressed(e -> {
             if (saveKCC.match(e)) {
-                addBtn.getOnAction().handle(null);
+                this.saveOrUpdateSnippet();
             } else if (cancelKCC.match(e)) {
-                cancelBtn.getOnAction().handle(null);
+                this.clearFormElements();
             }
         });
 
@@ -271,6 +274,8 @@ public class ListSnippets implements View {
 
         layout.setMinWidth(layout.getPrefWidth());
         layout.setMinHeight(layout.getPrefHeight());
+
+        this.clearFormElements();
 
         table.autosize();
         table.requestFocus();
