@@ -82,4 +82,13 @@ public class Logic {
     public List<Snippet> getAvailableSnippets() {
         return this.sd.getAvailableSnippets(this.currentUser);
     }
+
+    /** Creates a Snippet according to the given object
+     *
+     * @param s Snippet to be created
+     */
+    public boolean createSnippet(Snippet s) {
+        s.setOwner(this.currentUser);
+        return this.sd.save(s);
+    }
 }

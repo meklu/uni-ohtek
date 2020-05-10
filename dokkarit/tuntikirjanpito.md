@@ -17,4 +17,5 @@ Pvm   | Aika      | Asia
 28.4. | 1h 20min  | Uloskirjautumisnappi, alustava arkkitehtuuriasiakirja sekä käyttöohje
 10.5. | 4h 20min  | Tunnistejuttuja relaatioineen
 10.5. | 2h        | Koodinpätkänäkymän populointi ja koodinpätkän leikepöydälle kopiointi
-…     | 23h 55min | *Yhteensä*
+10.5. | 40min     | Koodinpätkän lisäystoiminto
+…     | 24h 35min | *Yhteensä*

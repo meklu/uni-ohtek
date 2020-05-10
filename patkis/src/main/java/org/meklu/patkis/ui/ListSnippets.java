@@ -4,12 +4,17 @@ package org.meklu.patkis.ui;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -25,6 +30,11 @@ public class ListSnippets implements View {
     private final Stage stage = new Stage();
     private final ObservableList<Snippet> snippets;
     private final Logic logic;
+
+    private TextField addTitle;
+    private TextField addDescription;
+    private TextArea addSnippet;
+    private CheckBox addPublic;
 
     @Override
     public Stage getStage() {
@@ -43,6 +53,13 @@ public class ListSnippets implements View {
         } catch (Exception e) {
             System.out.println("failed to copy item to clipboard, possibly no focus");
         }
+    }
+
+    private void clearFormElements() {
+        addTitle.clear();
+        addDescription.clear();
+        addSnippet.clear();
+        addPublic.setSelected(false);
     }
 
     ListSnippets(PatkisUi ui) {
@@ -107,11 +124,56 @@ public class ListSnippets implements View {
             }
         });
 
-        layout.getChildren().addAll(menubar, table);
+        VBox adder = new VBox();
+        addTitle = new TextField();
+        addTitle.setPromptText("Title");
+        addTitle.setFocusTraversable(true);
+
+        addDescription = new TextField();
+        addDescription.setPromptText("Description");
+        addDescription.setFocusTraversable(true);
+
+        addSnippet = new TextArea();
+        addSnippet.setPromptText("<code>");
+        addSnippet.setFocusTraversable(true);
+
+        addPublic = new CheckBox();
+        addPublic.setSelected(false);
+        addPublic.setFocusTraversable(true);
+        Label lblAddPublic = new Label("Public snippet");
+
+        Button addBtn = new Button("Add snippet");
+        addBtn.setOnAction(e -> {
+            Snippet s = new Snippet(logic.getCurrentUser());
+            s.setTitle(addTitle.getText());
+            s.setDescription(addDescription.getText());
+            s.setSnippet(addSnippet.getText());
+            s.setPublic(addPublic.isSelected());
+            this.clearFormElements();
+            logic.createSnippet(s);
+            this.refreshSnippets();
+        });
+
+        addTitle.setOnAction(e -> {
+            addDescription.requestFocus();
+        });
+        addDescription.setOnAction(e -> {
+            addSnippet.requestFocus();
+        });
+
+        HBox adderFoot = new HBox();
+        adderFoot.getChildren().addAll(addBtn, lblAddPublic, addPublic);
+        adderFoot.setSpacing(6);
+        adderFoot.setAlignment(Pos.CENTER_LEFT);
+
+        adder.getChildren().addAll(addTitle, addDescription, addSnippet, adderFoot);
+
+        layout.getChildren().addAll(menubar, table, adder);
 
         layout.setMinWidth(layout.getPrefWidth());
         layout.setMinHeight(layout.getPrefHeight());
 
         table.autosize();
+        table.requestFocus();
     }
 }
