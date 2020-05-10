@@ -1,6 +1,7 @@
 
 package org.meklu.patkis.ui;
 
+import javafx.geometry.Pos;
 import org.meklu.patkis.domain.Logic;
 
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class LoginScreen implements View {
@@ -62,6 +64,13 @@ public class LoginScreen implements View {
             }
         });
 
-        layout.getChildren().addAll(userLabel, userField, loginButton, registerButton, resetButton);
+        HBox loginRegisterRow = new HBox();
+        loginRegisterRow.getChildren().addAll(loginButton, registerButton);
+        loginRegisterRow.setAlignment(Pos.CENTER);
+        loginRegisterRow.setSpacing(7);
+
+        layout.setAlignment(Pos.CENTER);
+        layout.setSpacing(7);
+        layout.getChildren().addAll(userLabel, userField, loginRegisterRow, resetButton);
     }
 }

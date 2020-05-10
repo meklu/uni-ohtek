@@ -21,6 +21,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import org.meklu.patkis.domain.Logic;
@@ -204,7 +206,22 @@ public class ListSnippets implements View {
                     public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         this.setFont(monoFont);
-                        this.setText(item);
+                        // strip extra lines if necessary, looking for both LF and CR
+                        if (item == null) {
+                            return;
+                        }
+                        int nlpos = item.indexOf('\n');
+                        int crpos = item.indexOf('\r');
+                        if (nlpos == -1) {
+                            nlpos = crpos;
+                        } else if (crpos != -1) { // neither is -1
+                            nlpos = Math.min(nlpos, crpos);
+                        }
+                        if (nlpos == -1) {
+                            this.setText(item);
+                        } else {
+                            this.setText(item.substring(0, nlpos) + "…");
+                        }
                     }
                 };
             }
@@ -232,7 +249,10 @@ public class ListSnippets implements View {
             this.editTableSnippet(table);
         });
 
-        menubar.getChildren().addAll(copyBtn, editBtn, logout);
+        Region menuPad = new Region();
+        HBox.setHgrow(menuPad, Priority.ALWAYS);
+
+        menubar.getChildren().addAll(copyBtn, editBtn, menuPad, logout);
         menubar.autosize();
 
         ContextMenu ctxmenu = new ContextMenu();
