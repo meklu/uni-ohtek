@@ -21,6 +21,7 @@ public class PatkisUi extends Application {
         database = new Database("patkisdb.db");
         DBUserDao ud = new DBUserDao(database);
         DBSnippetDao sd = new DBSnippetDao(database);
+        sd.setLogic(logic);
         sd.setUserDao(ud);
         DBTagDao td = new DBTagDao(database);
         sd.setTagDao(td);

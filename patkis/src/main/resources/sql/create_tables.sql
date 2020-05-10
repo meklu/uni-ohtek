@@ -39,5 +39,6 @@ CREATE TABLE IF NOT EXISTS tags_snippets (
 	created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE,
 	FOREIGN KEY (snippet_id) REFERENCES snippets(id) ON DELETE CASCADE,
-	FOREIGN KEY (tagger_id) REFERENCES users(id) ON DELETE CASCADE
+	FOREIGN KEY (tagger_id) REFERENCES users(id) ON DELETE CASCADE,
+	UNIQUE(tag_id, snippet_id, tagger_id)
 );

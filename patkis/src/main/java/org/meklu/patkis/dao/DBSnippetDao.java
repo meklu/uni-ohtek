@@ -5,17 +5,23 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import org.meklu.patkis.domain.Database;
+import org.meklu.patkis.domain.Logic;
 import org.meklu.patkis.domain.Pair;
 import org.meklu.patkis.domain.Snippet;
 import org.meklu.patkis.domain.Triple;
 import org.meklu.patkis.domain.User;
 
 public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
+    private Logic logic = null;
     private DBUserDao userDao = null;
     private DBTagDao tagDao = null;
 
     public DBSnippetDao(Database db) {
         super(db);
+    }
+
+    public void setLogic(Logic logic) {
+        this.logic = logic;
     }
 
     public void setUserDao(DBUserDao userDao) {
@@ -31,9 +37,22 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
         return "snippets";
     }
 
+    private boolean saveTags(Snippet s) {
+        boolean ret = true;
+        ret = ret && s.getUnlinkTags().stream().map(
+            t -> tagDao.unlinkFromSnippet(t, s, logic.getCurrentUser())
+        ).allMatch(succ -> succ);
+        if (ret) {
+            s.setUnlinkTags(new ArrayList<>());
+        }
+        ret = ret && s.getUserTags().stream().map(
+            t -> tagDao.linkToSnippet(t, s, logic.getCurrentUser())
+        ).allMatch(succ -> succ);
+        return ret;
+    }
+
     @Override
     public boolean save(Snippet s) {
-        //TODO: We'll want to save the tag list here as well at some point
         List<Pair<String, String>> fields = new ArrayList<>();
         fields.add(new Pair<>("title", s.getTitle()));
         fields.add(new Pair<>("description", s.getDescription()));
@@ -43,12 +62,13 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
 
         int id = db.saveReturningId(this.tableName(), fields);
         s.setId(id);
-        return id != -1;
+        boolean ret = id != -1;
+        // update the tag list
+        return ret && saveTags(s);
     }
 
     @Override
     public boolean update(Snippet s) {
-        //TODO: We'll want to update the tag list here as well at some point
         List<Pair<String, String>> fields = new ArrayList<>();
         fields.add(new Pair<>("title", s.getTitle()));
         fields.add(new Pair<>("description", s.getDescription()));
@@ -56,7 +76,9 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
         fields.add(new Pair<>("is_public", s.isPublic() ? "1" : "0"));
         fields.add(new Pair<>("owner_id", s.getOwner().getId() + ""));
 
-        return db.update(this.tableName(), "id", "" + s.getId(), fields);
+        boolean ret = db.update(this.tableName(), "id", "" + s.getId(), fields);
+        // update the tag list
+        return ret && saveTags(s);
     }
 
     @Override
@@ -79,6 +101,7 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
             s.setDescription(rs.getString("description"));
             s.setSnippet(rs.getString("snippet"));
             s.setPublic(rs.getBoolean("is_public"));
+            this.refreshTags(s);
             return s;
         } catch (Exception e) {
             System.err.println("failed to convert resultset to snippet");
@@ -108,5 +131,14 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
         addtl.add("ORDER BY created DESC");
 
         return this.findWhere(fields, addtl);
+    }
+
+    private void refreshTags(Snippet s) {
+        if (s.getId() == -1) {
+            System.err.println("tried to refresh tags for an unsaved snippet");
+            return;
+        }
+        s.setTags(this.tagDao.findBySnippet(s));
+        s.setUserTags(this.tagDao.findBySnippet(s, this.logic.getCurrentUser()));
     }
 }

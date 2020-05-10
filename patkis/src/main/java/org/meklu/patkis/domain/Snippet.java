@@ -1,6 +1,7 @@
 
 package org.meklu.patkis.domain;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +18,13 @@ public class Snippet {
     private String snippet = "";
     private User owner;
 
+    // Should probably refactor this into some collection of Tag/User combos
+    // and generate a sanitized tag set automagically on updates
     private final Set<Tag> tags = new HashSet<>();
+    // This contains tags that were set by our current user
+    private final Set<Tag> userTags = new HashSet<>();
+    // This contains tags that should be unlinked next
+    private final Set<Tag> unlinkTags = new HashSet<>();
 
     /** Instantiates a Snippet object
      *
@@ -75,8 +82,51 @@ public class Snippet {
         this.owner = owner;
     }
 
+    public void addTag(Tag t) {
+        if (this.unlinkTags.contains(t)) {
+            this.unlinkTags.remove(t);
+        }
+        if (this.userTags.contains(t)) {
+            return;
+        }
+        this.userTags.add(t);
+        this.tags.add(t);
+    }
+
+    public void removeTag(Tag t) {
+        if (!this.userTags.contains(t)) {
+            return;
+        }
+        this.unlinkTags.add(t);
+        this.userTags.remove(t);
+        this.tags.remove(t);
+    }
+
     public Set<Tag> getTags() {
         return tags;
+    }
+
+    public void setTags(Collection<Tag> tags) {
+        this.tags.clear();
+        this.tags.addAll(tags);
+    }
+
+    public Set<Tag> getUserTags() {
+        return userTags;
+    }
+
+    public void setUserTags(Collection<Tag> userTags) {
+        this.userTags.clear();
+        this.userTags.addAll(userTags);
+    }
+
+    public Set<Tag> getUnlinkTags() {
+        return unlinkTags;
+    }
+
+    public void setUnlinkTags(Collection<Tag> unlinkTags) {
+        this.unlinkTags.clear();
+        this.unlinkTags.addAll(unlinkTags);
     }
 
     @Override
