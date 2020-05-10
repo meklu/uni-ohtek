@@ -56,7 +56,7 @@ public class PatkisUi extends Application {
     }
 
     public void toSnippets() {
-        listSnippets.refreshSnippets();
+        listSnippets.refreshData();
         this.setStage(listSnippets.getStage());
     }
 

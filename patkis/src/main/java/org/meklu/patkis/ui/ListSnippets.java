@@ -28,10 +28,12 @@ import org.meklu.patkis.domain.Logic;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.meklu.patkis.domain.Snippet;
+import org.meklu.patkis.domain.Tag;
 
 public class ListSnippets implements View {
     private final Stage stage = new Stage();
     private final ObservableList<Snippet> snippets;
+    private final ObservableList<Tag> tags;
     private final Logic logic;
 
     private TextField addTitle;
@@ -41,18 +43,31 @@ public class ListSnippets implements View {
     private Button addBtn;
     private Button cancelBtn;
     private Snippet editSnippet = null;
+    private boolean allowEdit = true;
 
     private final String addStr = "Add snippet";
     private final String updateStr = "Update snippet";
+    private final String cancelStr = "Cancel edit";
+    private final String closeStr = "Close snippet";
 
     @Override
     public Stage getStage() {
         return stage;
     }
 
+    public void refreshData() {
+        this.refreshSnippets();
+        this.refreshTags();
+    }
+
     public void refreshSnippets() {
         this.snippets.clear();
         this.snippets.addAll(this.logic.getAvailableSnippets());
+    }
+
+    public void refreshTags() {
+        this.tags.clear();
+        this.tags.addAll(this.logic.getAvailableTags());
     }
 
     private void copyToClipboard(TableView table, PatkisUi ui) {
@@ -67,6 +82,7 @@ public class ListSnippets implements View {
     private void editTableSnippet(TableView table) {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
+            this.clearFormElements();
             this.startEdit(this.snippets.get(row));
         } catch (Exception e) {
             System.out.println("failed to start snippet edit, possibly no focus");
@@ -74,6 +90,9 @@ public class ListSnippets implements View {
     }
 
     private void saveOrUpdateSnippet() {
+        if (!this.allowEdit) {
+            return;
+        }
         Snippet s;
         if (this.editSnippet != null) {
             s = this.editSnippet;
@@ -93,7 +112,23 @@ public class ListSnippets implements View {
         if (succ) {
             this.clearFormElements();
         }
-        this.refreshSnippets();
+        this.refreshData();
+    }
+
+    private void setAllowEditable() {
+        addTitle.setEditable(this.allowEdit);
+        addDescription.setEditable(this.allowEdit);
+        addSnippet.setEditable(this.allowEdit);
+        addPublic.setDisable(!this.allowEdit);
+        addBtn.setVisible(allowEdit);
+        addBtn.setManaged(allowEdit);
+        if (!allowEdit) {
+            cancelBtn.setVisible(true);
+            cancelBtn.setManaged(true);
+            cancelBtn.setText(closeStr);
+        } else {
+            cancelBtn.setText(cancelStr);
+        }
     }
 
     private void clearFormElements() {
@@ -106,12 +141,18 @@ public class ListSnippets implements View {
         cancelBtn.setVisible(false);
         cancelBtn.setManaged(false);
         addTitle.requestFocus();
+        this.allowEdit = true;
+        this.setAllowEditable();
     }
 
     private void startEdit(Snippet s) {
-        if (s == null || !s.getOwner().equals(this.logic.getCurrentUser())) {
+        if (s == null) {
             return;
         }
+        if (!s.getOwner().equals(this.logic.getCurrentUser())) {
+            this.allowEdit = false;
+        }
+        this.setAllowEditable();
         this.editSnippet = s;
         addTitle.setText(s.getTitle());
         addDescription.setText(s.getDescription());
@@ -139,6 +180,9 @@ public class ListSnippets implements View {
         table.getColumns().addAll(title, desc, code);
 
         this.snippets = FXCollections.observableArrayList(
+            new ArrayList<>()
+        );
+        this.tags = FXCollections.observableArrayList(
             new ArrayList<>()
         );
 
@@ -174,7 +218,7 @@ public class ListSnippets implements View {
         logout.setOnAction((_ignore) -> {
             logic.logout();
             this.clearFormElements();
-            this.refreshSnippets();
+            this.refreshData();
             ui.toLoginScreen();
         });
 
@@ -183,7 +227,7 @@ public class ListSnippets implements View {
             this.copyToClipboard(table, ui);
         });
 
-        Button editBtn = new Button("Edit");
+        Button editBtn = new Button("View/Edit");
         copyBtn.setOnAction(eh -> {
             this.editTableSnippet(table);
         });
@@ -198,7 +242,7 @@ public class ListSnippets implements View {
         copyCtx.setOnAction(copyBtn.getOnAction());
         ctxmenu.getItems().addAll(copyCtx);
 
-        MenuItem editCtx = new MenuItem("Edit snippet");
+        MenuItem editCtx = new MenuItem("View/edit snippet");
         editCtx.setOnAction(editBtn.getOnAction());
         ctxmenu.getItems().addAll(editCtx);
 
@@ -235,12 +279,12 @@ public class ListSnippets implements View {
         addPublic.setFocusTraversable(true);
         Label lblAddPublic = new Label("Public snippet");
 
-        addBtn = new Button("Add snippet");
+        addBtn = new Button(this.addStr);
         addBtn.setOnAction(e -> {
             this.saveOrUpdateSnippet();
         });
 
-        cancelBtn = new Button("Cancel edit");
+        cancelBtn = new Button(this.cancelStr);
         cancelBtn.setCancelButton(true);
         cancelBtn.setOnAction(e -> {
             this.clearFormElements();

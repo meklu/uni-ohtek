@@ -102,4 +102,12 @@ public class Logic {
         }
         return this.sd.update(s);
     }
+
+    /** Gets the Tags visible to the current user
+     *
+     * @return The list of Tags available
+     */
+    public List<Tag> getAvailableTags() {
+        return this.td.getAll();
+    }
 }
