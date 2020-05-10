@@ -164,7 +164,7 @@ public class Database {
      */
     public ResultSet findWhere(String table, List<Triple<String, String, String>> whereFields, List<String> additionalOrders) {
         try {
-            String frepl = String.join(",", whereFields.stream().map(f -> f.getA() + " " + f.getB() + " ?").collect(Collectors.toList()));
+            String frepl = String.join(" AND ", whereFields.stream().map(f -> f.getA() + " " + f.getB() + " ?").collect(Collectors.toList()));
             String addtl = String.join(" ", additionalOrders);
             String query = "SELECT * FROM " + table + (!whereFields.isEmpty() ? " WHERE " + frepl : "") + " " + addtl;
             PreparedStatement stmt = conn.prepareStatement(query);
