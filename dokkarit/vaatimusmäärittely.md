@@ -30,10 +30,12 @@ suurempioikeuksista sisällönhallintaa.
 
 - [x] Käyttäjä näkee yleiskatsauksen viimeisimmistä koodinpätkistään
 	- [x] näkymärunko
-	- [ ] datan populointi näkymään
-- [ ] Käyttäjä voi lisätä uuden koodinpätkän
-	- [ ] mikäli koodinpätkää ei määritellä julkiseksi, näkyy se vain
+	- [x] datan populointi näkymään
+- [x] Käyttäjä voi lisätä uuden koodinpätkän
+	- [x] mikäli koodinpätkää ei määritellä julkiseksi, näkyy se vain
 	  käyttäjälle itselleen
+- [x] Käyttäjä voi päivittää koodinpätkän tiedot
+	- [x] vain omille koodinpätkilleen
 - [ ] Käyttäjä voi asettaa koodinpätkälle sanamuotoisia *tunnisteita*, jotka
   auttavat oikean koodinpätkän löytämisessä
 	- tunniste voi olla esim. jokin seuraavista:

@@ -18,4 +18,5 @@ Pvm   | Aika      | Asia
 10.5. | 4h 20min  | Tunnistejuttuja relaatioineen
 10.5. | 2h        | Koodinpätkänäkymän populointi ja koodinpätkän leikepöydälle kopiointi
 10.5. | 40min     | Koodinpätkän lisäystoiminto
-…     | 24h 35min | *Yhteensä*
+11.5. | 50min     | Koodinpätkän päivittämistoiminto ja pari käytettävyysasiaa
+…     | 25h 25min | *Yhteensä*
