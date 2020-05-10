@@ -12,6 +12,7 @@ import org.meklu.patkis.domain.User;
 
 public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
     private DBUserDao userDao = null;
+    private DBTagDao tagDao = null;
 
     public DBSnippetDao(Database db) {
         super(db);
@@ -19,6 +20,10 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
 
     public void setUserDao(DBUserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public void setTagDao(DBTagDao tagDao) {
+        this.tagDao = tagDao;
     }
 
     @Override

@@ -22,7 +22,8 @@ public class PatkisUi extends Application {
         DBUserDao ud = new DBUserDao(database);
         DBSnippetDao sd = new DBSnippetDao(database);
         sd.setUserDao(ud);
-        SpoofTagDao td = new SpoofTagDao();
+        DBTagDao td = new DBTagDao(database);
+        sd.setTagDao(td);
         logic = new Logic(database, ud, sd, td);
 
         loginScreen = new LoginScreen(this);
