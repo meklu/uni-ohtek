@@ -6,7 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -91,6 +93,16 @@ public class ListSnippets implements View {
         }
     }
 
+    private void deleteTableSnippet(TableView table) {
+        try {
+            int row = table.getFocusModel().getFocusedCell().getRow();
+            this.clearFormElements();
+            this.deleteSnippet(this.snippets.get(row));
+        } catch (Exception e) {
+            System.out.println("failed to delete snippet, possibly no focus");
+        }
+    }
+
     private void saveOrUpdateSnippet() {
         if (!this.allowEdit) {
             return;
@@ -166,6 +178,27 @@ public class ListSnippets implements View {
         addTitle.requestFocus();
     }
 
+    private void deleteSnippet(Snippet s) {
+        if (!s.getOwner().equals(logic.getCurrentUser())) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.initOwner(stage);
+            a.setTitle("Can't delete snippet!");
+            a.setContentText(a.getTitle() + " You are not the creator of this snippet.");
+            a.showAndWait();
+            return;
+        }
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.initOwner(stage);
+        a.setTitle("Delete snippet");
+        a.setContentText("Are you sure you want to delete this?");
+        a.showAndWait();
+        if (a.getResult() != ButtonType.OK) {
+            return;
+        }
+        this.logic.deleteSnippet(s);
+        this.refreshData();
+    }
+
     ListSnippets(PatkisUi ui) {
         logic = ui.logic;
         VBox layout = new VBox();
@@ -206,10 +239,11 @@ public class ListSnippets implements View {
                     public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         this.setFont(monoFont);
-                        // strip extra lines if necessary, looking for both LF and CR
                         if (item == null) {
+                            this.setText(null);
                             return;
                         }
+                        // strip extra lines if necessary, looking for both LF and CR
                         int nlpos = item.indexOf('\n');
                         int crpos = item.indexOf('\r');
                         if (nlpos == -1) {
@@ -245,14 +279,19 @@ public class ListSnippets implements View {
         });
 
         Button editBtn = new Button("View/Edit");
-        copyBtn.setOnAction(eh -> {
+        editBtn.setOnAction(eh -> {
             this.editTableSnippet(table);
+        });
+
+        Button deleteBtn = new Button("Delete");
+        deleteBtn.setOnAction(eh -> {
+            this.deleteTableSnippet(table);
         });
 
         Region menuPad = new Region();
         HBox.setHgrow(menuPad, Priority.ALWAYS);
 
-        menubar.getChildren().addAll(copyBtn, editBtn, menuPad, logout);
+        menubar.getChildren().addAll(copyBtn, editBtn, deleteBtn, menuPad, logout);
         menubar.autosize();
 
         ContextMenu ctxmenu = new ContextMenu();
@@ -266,12 +305,18 @@ public class ListSnippets implements View {
         editCtx.setOnAction(editBtn.getOnAction());
         ctxmenu.getItems().addAll(editCtx);
 
+        MenuItem deleteCtx = new MenuItem("Delete snippet");
+        editCtx.setOnAction(deleteBtn.getOnAction());
+        ctxmenu.getItems().addAll(deleteCtx);
+
         KeyCodeCombination copyKCC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
         table.setOnKeyPressed(e -> {
             if (copyKCC.match(e)) {
                 this.copyToClipboard(table, ui);
             } else if (e.getCode() == KeyCode.ENTER) {
                 this.editTableSnippet(table);
+            } else if (e.getCode() == KeyCode.DELETE) {
+                this.deleteTableSnippet(table);
             }
         });
         table.setOnMouseClicked(e -> {

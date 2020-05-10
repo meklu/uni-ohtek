@@ -19,4 +19,5 @@ Pvm   | Aika      | Asia
 10.5. | 2h        | Koodinpätkänäkymän populointi ja koodinpätkän leikepöydälle kopiointi
 10.5. | 40min     | Koodinpätkän lisäystoiminto
 11.5. | 50min     | Koodinpätkän päivittämistoiminto ja pari käytettävyysasiaa
-…     | 25h 25min | *Yhteensä*
+11.5. | 1h 50min  | Koodinpätkän poistamistoiminto ja kälin siistimistä
+…     | 27h 15min | *Yhteensä*

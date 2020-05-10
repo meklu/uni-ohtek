@@ -43,7 +43,7 @@ suurempioikeuksista sisällönhallintaa.
 		- aihealue
 		- jokin muu erittäin kuvaava deskriptori
 - [ ] Käyttäjä voi selata koodinpätkiä tunnisteiden mukaan
-- [ ] Käyttäjä voi poistaa luomansa koodinpätkän
+- [x] Käyttäjä voi poistaa luomansa koodinpätkän
 - [x] Käyttäjä voi kirjautua ulos
 
 ## Jatkokehitysideoita

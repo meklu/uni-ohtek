@@ -92,6 +92,17 @@ public class Logic {
         return this.sd.save(s);
     }
 
+    /** Deletes a Snippet according to the given object
+     *
+     * @param s Snippet to delete
+     */
+    public boolean deleteSnippet(Snippet s) {
+        if (!this.currentUser.equals(s.getOwner())) {
+            return false;
+        }
+        return this.sd.delete(s);
+    }
+
     /** Updates a Snippet according to the given object
      *
      * @param s Snippet to update
