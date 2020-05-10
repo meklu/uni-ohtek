@@ -38,6 +38,12 @@ public class ListSnippets implements View {
     private TextField addDescription;
     private TextArea addSnippet;
     private CheckBox addPublic;
+    private Button addBtn;
+    private Button cancelBtn;
+    private Snippet editSnippet = null;
+
+    private final String addStr = "Add snippet";
+    private final String updateStr = "Update snippet";
 
     @Override
     public Stage getStage() {
@@ -58,11 +64,37 @@ public class ListSnippets implements View {
         }
     }
 
+    private void editTableSnippet(TableView table, PatkisUi ui) {
+        try {
+            int row = table.getFocusModel().getFocusedCell().getRow();
+            this.startEdit(this.snippets.get(row));
+        } catch (Exception e) {
+            System.out.println("failed to start snippet edit, possibly no focus");
+        }
+    }
+
     private void clearFormElements() {
         addTitle.clear();
         addDescription.clear();
         addSnippet.clear();
         addPublic.setSelected(false);
+        addBtn.setText(addStr);
+        this.editSnippet = null;
+    }
+
+    private void startEdit(Snippet s) {
+        if (s == null || !s.getOwner().equals(this.logic.getCurrentUser())) {
+            return;
+        }
+        this.editSnippet = s;
+        addTitle.setText(s.getTitle());
+        addDescription.setText(s.getDescription());
+        addSnippet.setText(s.getSnippet());
+        addPublic.setSelected(s.isPublic());
+        addBtn.setText(updateStr);
+        cancelBtn.setVisible(true);
+        cancelBtn.setManaged(true);
+        addTitle.requestFocus();
     }
 
     ListSnippets(PatkisUi ui) {
@@ -115,6 +147,7 @@ public class ListSnippets implements View {
         Button logout = new Button("Log out");
         logout.setOnAction((_ignore) -> {
             logic.logout();
+            this.clearFormElements();
             this.refreshSnippets();
             ui.toLoginScreen();
         });
@@ -124,7 +157,12 @@ public class ListSnippets implements View {
             this.copyToClipboard(table, ui);
         });
 
-        menubar.getChildren().addAll(copyBtn, logout);
+        Button editBtn = new Button("Edit");
+        copyBtn.setOnAction(eh -> {
+            this.editTableSnippet(table, ui);
+        });
+
+        menubar.getChildren().addAll(copyBtn, editBtn, logout);
         menubar.autosize();
 
         ContextMenu ctxmenu = new ContextMenu();
@@ -134,10 +172,21 @@ public class ListSnippets implements View {
         copyCtx.setOnAction(copyBtn.getOnAction());
         ctxmenu.getItems().addAll(copyCtx);
 
+        MenuItem editCtx = new MenuItem("Edit snippet");
+        editCtx.setOnAction(editBtn.getOnAction());
+        ctxmenu.getItems().addAll(editCtx);
+
         KeyCodeCombination copyKCC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
         table.setOnKeyPressed(e -> {
             if (copyKCC.match(e)) {
                 this.copyToClipboard(table, ui);
+            } else if (e.getCode() == KeyCode.ENTER) {
+                this.editTableSnippet(table, ui);
+            }
+        });
+        table.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                this.editTableSnippet(table, ui);
             }
         });
 
@@ -160,17 +209,39 @@ public class ListSnippets implements View {
         addPublic.setFocusTraversable(true);
         Label lblAddPublic = new Label("Public snippet");
 
-        Button addBtn = new Button("Add snippet");
+        addBtn = new Button("Add snippet");
         addBtn.setOnAction(e -> {
-            Snippet s = new Snippet(logic.getCurrentUser());
+            Snippet s;
+            if (this.editSnippet != null) {
+                s = this.editSnippet;
+            } else {
+                s = new Snippet(logic.getCurrentUser());
+            }
             s.setTitle(addTitle.getText());
             s.setDescription(addDescription.getText());
             s.setSnippet(addSnippet.getText());
             s.setPublic(addPublic.isSelected());
-            this.clearFormElements();
-            logic.createSnippet(s);
+            boolean succ;
+            if (s.getId() == -1) {
+                succ = logic.createSnippet(s);
+            } else {
+                succ = logic.updateSnippet(s);
+            }
+            if (succ) {
+                this.clearFormElements();
+            }
             this.refreshSnippets();
         });
+
+        cancelBtn = new Button("Cancel edit");
+        cancelBtn.setCancelButton(true);
+        cancelBtn.setOnAction(e -> {
+            this.editSnippet = null;
+            this.clearFormElements();
+            cancelBtn.setVisible(false);
+            cancelBtn.setManaged(false);
+        });
+        cancelBtn.getOnAction().handle(null);
 
         addTitle.setOnAction(e -> {
             addDescription.requestFocus();
@@ -179,8 +250,18 @@ public class ListSnippets implements View {
             addSnippet.requestFocus();
         });
 
+        KeyCodeCombination saveKCC = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+        KeyCodeCombination cancelKCC = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
+        adder.setOnKeyPressed(e -> {
+            if (saveKCC.match(e)) {
+                addBtn.getOnAction().handle(null);
+            } else if (cancelKCC.match(e)) {
+                cancelBtn.getOnAction().handle(null);
+            }
+        });
+
         HBox adderFoot = new HBox();
-        adderFoot.getChildren().addAll(addBtn, lblAddPublic, addPublic);
+        adderFoot.getChildren().addAll(addBtn, cancelBtn, lblAddPublic, addPublic);
         adderFoot.setSpacing(6);
         adderFoot.setAlignment(Pos.CENTER_LEFT);
 

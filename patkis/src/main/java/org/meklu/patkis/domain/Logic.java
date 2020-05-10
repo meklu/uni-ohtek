@@ -91,4 +91,15 @@ public class Logic {
         s.setOwner(this.currentUser);
         return this.sd.save(s);
     }
+
+    /** Updates a Snippet according to the given object
+     *
+     * @param s Snippet to update
+     */
+    public boolean updateSnippet(Snippet s) {
+        if (!this.currentUser.equals(s.getOwner())) {
+            return false;
+        }
+        return this.sd.update(s);
+    }
 }
