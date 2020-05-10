@@ -95,7 +95,8 @@ public class DBSnippetDao extends DBDao<Snippet> implements SnippetDao {
     @Override
     public Snippet fromResultSet(ResultSet rs) {
         try {
-            Snippet s = new Snippet(this.userDao.findById(rs.getInt("owner_id")));
+            User u = this.userDao.findById(rs.getInt("owner_id"));
+            Snippet s = new Snippet(u);
             s.setId(rs.getInt("id"));
             s.setTitle(rs.getString("title"));
             s.setDescription(rs.getString("description"));

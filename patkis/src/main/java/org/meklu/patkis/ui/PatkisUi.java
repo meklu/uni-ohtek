@@ -21,11 +21,11 @@ public class PatkisUi extends Application {
         database = new Database("patkisdb.db");
         DBUserDao ud = new DBUserDao(database);
         DBSnippetDao sd = new DBSnippetDao(database);
-        sd.setLogic(logic);
         sd.setUserDao(ud);
         DBTagDao td = new DBTagDao(database);
         sd.setTagDao(td);
         logic = new Logic(database, ud, sd, td);
+        sd.setLogic(logic);
 
         loginScreen = new LoginScreen(this);
         registerUser = new RegisterUser(this);
@@ -54,6 +54,7 @@ public class PatkisUi extends Application {
     }
 
     public void toSnippets() {
+        listSnippets.refreshSnippets();
         this.setStage(listSnippets.getStage());
     }
 }
