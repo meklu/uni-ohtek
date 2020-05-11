@@ -31,7 +31,8 @@ käyttäjä painaa erikseen paluunappia.
 ## Päänäkymä
 
 Kun käyttäjä on kirjautunut sisään onnistuneesti, hänet ohjataan listanäkymään
-hänelle itselleen näkyvistä koodinpätkistä.
+hänelle itselleen näkyvistä koodinpätkistä. Näihin lukeutuvat käyttäjän omat
+koodinpätkät sekä muiden käyttäjien julkiseksi luokittelemat koodinpätkät.
 
 ![Päänäkymä](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/manual/patkis-mainview.png)
 
