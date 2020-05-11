@@ -1,0 +1,11 @@
+# websequencediagrams.com
+user->UI: click login
+    UI->Logic: login()
+        Logic->UserDao: findByLogin()
+            UserDao->Database: findByField()
+            Database-->UserDao: User?
+        UserDao-->Logic: User?
+        Logic->Logic: setCurrentUser()
+    Logic-->UI: true
+    UI-->UI: setStage()
+UI-->user: user gets in main view

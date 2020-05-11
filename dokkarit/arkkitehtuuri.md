@@ -61,3 +61,36 @@ Valtaosa talletustoteutuksesta on abstrahoitu hyvin geneeriseksi, millä koodin
 turha toistaminen on saatu melko alhaiselle tasolle. Rakenne jättää myös
 vaihtoehtoisten talletusmenetelmien kuten muiden tietokantojen
 käyttöönottamisen kohtalaisen kivuttomaksi.
+
+## Toiminnallisuuskaavioita
+
+### Kirjautuminen
+
+Sisäänkirjautuminen toimii hyvin yksinkertaisesti. Käyttöliittymä kutsuu
+sovelluslogiikan sisäänkirjautumismetodia ja vaihtaa näkymää sen mukaan tämän
+onnistuessa.
+
+![Sisäänkirjautumissekvenssikaavio](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/architecture/logging-in.png)
+
+### Koodinpätkän tallentaminen
+
+Koodinpätkän tallentamisessa käyttäjän painettua tallennusnappia käy seuraavaa.
+Käyttöliittymä kutsuu sovelluslogiikan tunnisteenluontimetodia kerran kunkin
+koodinpätkälle määritellyn tunnisteen kohdalla. Sovelluslogiikka kysyy
+tunnistedaolta onko kyseistä tunnistetta tallennettu ja jos on, ei luo suotta
+uutta. Tällöin se vain päivittää oman tunnisteolionsa vastaamaan tietokantaan
+talletettua ja jatkaa rouskuttamista. Jos tunnistetta ei löydy tietokannasta,
+sovelluslogiikka kutsuu tunnistedaoa luonnin merkeissä.
+
+Kun tarvittavat tunnistetietueet ovat tietokannassa, käyttöliittymä kutsuu
+sovelluslogiikan käyttäjänluontimetodia, mikä puolestaan johdetaan
+koodinpätkistä vastaavan daon tallennusrutiiniin. Tietokantapohjaisella
+toteutuksella tämä dao kutsuu tietokantamanageriin luotua yleistä
+tallennusrutiinia omien tavallisten kenttiensä arvoilla. Tämän jälkeen
+koodinpätkädaosta kutsutaan vielä tunnistedaoa
+tunniste-koodinpätkä-käyttäjä-linkitystä varten.
+
+Tässä vaiheessa suoritus valuu takaisin aina käyttöliittymään asti ja lopulta
+ruudulle piirtyy päivitetty näkymä.
+
+![Tallennussekvenssikaavio](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/architecture/snippet-creation.png)

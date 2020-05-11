@@ -1,0 +1,21 @@
+# websequencediagrams.com
+user->UI: click save
+    UI->Logic: n * createTag()
+    Logic->TagDao: findByTag()
+    TagDao->Database: findByField()
+    Database->TagDao: Tag?
+    TagDao->Logic: Tag?
+    Logic->TagDao: null ? save()
+    TagDao->Database: saveReturningId()
+    Database-->TagDao: id: int
+    TagDao-->Logic: true
+    Logic-->UI: true
+    UI->Logic: createSnippet()
+    Logic->SnippetDao: save()
+    SnippetDao->Database: saveReturningId()
+    Database-->SnippetDao: id: int
+    SnippetDao->TagDao: n * linkToSnippet()
+    TagDao-->SnippetDao: true
+    SnippetDao-->Logic: true
+    Logic-->UI: true
+    UI-->user: view refreshed
