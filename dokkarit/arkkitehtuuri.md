@@ -4,6 +4,8 @@
 
 Sovelluksessa käytetään kolmikerroksista pakkausrakennetta.
 
+![Pakkausrakenne](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/architecture/structure.png)
+
 Pakkauksen `org.meklu.patkis` alipakkaus `ui` sisältää käyttöliittymälogiikan,
 `domain` varsinaisen sovelluslogiikan ja `dao` huolehtii tiedon
 tallentamisesta.
@@ -34,11 +36,15 @@ sekä
 [Tag](https://github.com/meklu/uni-ohtek/blob/master/patkis/src/main/java/org/meklu/patkis/domain/Tag.java),
 jotka kuvaavat käyttäjiä, koodinpätkiä sekä tunnisteita.
 
+![Datamalli](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/architecture/data-model.png)
+
 Sovellustoiminnallisuudet toteuttaa luokka
 [Logic](https://github.com/meklu/uni-ohtek/blob/master/patkis/src/main/java/org/meklu/patkis/domain/Logic.java).
 Tämä tarjoaa käyttöliittymälle sen tarvitsemat sovellusloogiset toiminnot,
 kuten sisäänkirjautumisen, rekisteröitymisen ja koodinpätkätietueiden
 listaamisen ja luomisen.
+
+![Sovelluslogiikkakaavio](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/architecture/application-logic.png)
 
 `Logic` käsittelee tietueiden käsittelyn välillisesti `dao`-alipakkauksen
 Dao-rajapintojen avulla varsinaisia implementaatioita näiden kautta
