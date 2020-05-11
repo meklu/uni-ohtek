@@ -2,8 +2,13 @@
 package org.meklu.patkis.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,18 +31,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.meklu.patkis.domain.Logic;
 
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.meklu.patkis.domain.Pair;
 import org.meklu.patkis.domain.Snippet;
 import org.meklu.patkis.domain.Tag;
 
 public class ListSnippets implements View {
     private final Stage stage = new Stage();
     private final ObservableList<Snippet> snippets;
-    private final ObservableList<Tag> tags;
+    private final ObservableSet<Tag> tags;
+    // pairs of (foreground, background)
+    private final Map<Tag, Pair<Color, Color>> tagColors;
     private final Logic logic;
 
     private TextField addTitle;
@@ -72,6 +81,7 @@ public class ListSnippets implements View {
     public void refreshTags() {
         this.tags.clear();
         this.tags.addAll(this.logic.getAvailableTags());
+        this.generateTagColors();
     }
 
     private void copyToClipboard(TableView table, PatkisUi ui) {
@@ -101,6 +111,13 @@ public class ListSnippets implements View {
         } catch (Exception e) {
             System.out.println("failed to delete snippet, possibly no focus");
         }
+    }
+
+    private void logout(PatkisUi ui) {
+        logic.logout();
+        this.clearFormElements();
+        this.refreshData();
+        ui.toLoginScreen();
     }
 
     private void saveOrUpdateSnippet() {
@@ -199,6 +216,44 @@ public class ListSnippets implements View {
         this.refreshData();
     }
 
+    private void generateTagColors() {
+        this.tagColors.clear();
+        Color fg, bg;
+        for (Tag t : this.tags) {
+            double hueShift = 0.0;
+            double saturationFactor = 0.6;
+            double brightnessFactor = 1.0;
+            double opacityFactor = 1.0;
+            bg = this.stringHashToColor(t.getTag());
+            if (Math.abs(bg.getBrightness() - 0.5) < 0.3) {
+                brightnessFactor *= bg.getBrightness() > 0.5 ? 1.6 : 1.0/1.6;
+            }
+            bg = bg.deriveColor(
+                hueShift,
+                saturationFactor,
+                brightnessFactor,
+                opacityFactor
+            );
+            fg = bg.getBrightness() > 0.5 ? Color.BLACK : Color.WHITE;
+            this.tagColors.put(t, new Pair<>(fg, bg));
+        }
+    }
+
+    // For autogenerating colors for tags
+    private Color stringHashToColor(String str) {
+        // we'll just disregard the top 2 bits
+        int hash = str.hashCode();
+        int r =  hash        & ((1 << 10) - 1);
+        int g = (hash >> 10) & ((1 << 10) - 1);
+        int b = (hash >> 20) & ((1 << 10) - 1);
+        double max = Math.max(Math.max(r, g), Math.max(b, 1));
+        return Color.color(r/max, g/max, b/max);
+    }
+
+    private String colorToString(Color c) {
+        return "rgb(" + c.getRed()*255 + "," + c.getGreen()*255 + "," + c.getBlue()*255 + ")";
+    }
+
     ListSnippets(PatkisUi ui) {
         logic = ui.logic;
         VBox layout = new VBox();
@@ -206,33 +261,85 @@ public class ListSnippets implements View {
         this.stage.setScene(scene);
         this.stage.setTitle("Snippets - Pätkis");
 
+        KeyCodeCombination quitKCC = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
+        layout.setOnKeyPressed(e -> {
+            if (quitKCC.match(e)) {
+                this.logout(ui);
+            }
+        });
+
         Font monoFont = Font.font("monospace");
+        Font sansFont = Font.font("sans-serif");
 
         TableView table = new TableView();
-        TableColumn title = new TableColumn("Title");
-        TableColumn desc = new TableColumn("Description");
-        TableColumn code = new TableColumn("Code");
-        table.getColumns().addAll(title, desc, code);
+        TableColumn tagCol = new TableColumn("Tags");
+        tagCol.setSortable(false);
+        TableColumn titleCol = new TableColumn("Title");
+        TableColumn descCol = new TableColumn("Description");
+        TableColumn codeCol = new TableColumn("Code");
+        table.getColumns().addAll(tagCol, titleCol, descCol, codeCol);
 
         this.snippets = FXCollections.observableArrayList(
             new ArrayList<>()
         );
-        this.tags = FXCollections.observableArrayList(
-            new ArrayList<>()
+        this.tags = FXCollections.observableSet(
+            new HashSet<>()
         );
+        this.tagColors = new HashMap<>();
 
-        title.setCellValueFactory(
+        tagCol.setCellValueFactory(
+            new PropertyValueFactory<Snippet, Set<Tag>>("tags")
+        );
+        tagCol.setCellFactory(new Callback<TableColumn, TableCell>() {
+            public TableCell call(TableColumn param) {
+                return new TableCell<Snippet, Set<Tag>>() {
+                    @Override
+                    public void updateItem(Set<Tag> item, boolean empty) {
+                        super.updateItem(item, empty);
+                        this.setFont(monoFont);
+                        if (empty || item == null) {
+                            this.setText(null);
+                            this.setGraphic(null);
+                            return;
+                        }
+                        HBox hbox = new HBox();
+                        hbox.setAlignment(Pos.CENTER_RIGHT);
+                        hbox.setSpacing(3);
+                        Label tl;
+                        for (Tag t : item) {
+                            tl = new Label(t.getTag());
+                            Pair<Color, Color> colors =  tagColors.get(t);
+                            tl.setStyle(
+                                "-fx-text-fill: " + colorToString(colors.getA()) + ";" +
+                                "-fx-border-color: " + colorToString(colors.getA()) + ";" +
+                                "-fx-background-color: " + colorToString(colors.getB()) + ";" +
+                                "-fx-padding: 0 2;" +
+                                "-fx-font-weight: bold;" +
+                                "-fx-font-family: sans-serif;" +
+                                "-fx-background-radius: 6;" +
+                                "-fx-border-radius: 5;"
+                            );
+                            hbox.getChildren().add(tl);
+                        }
+                        this.setGraphic(hbox);
+                        this.setAlignment(Pos.CENTER_RIGHT);
+                    }
+                };
+            }
+        });
+
+        titleCol.setCellValueFactory(
             new PropertyValueFactory<Snippet, String>("title")
         );
 
-        desc.setCellValueFactory(
+        descCol.setCellValueFactory(
             new PropertyValueFactory<Snippet, String>("description")
         );
 
-        code.setCellValueFactory(
+        codeCol.setCellValueFactory(
             new PropertyValueFactory<Snippet, String>("snippet")
         );
-        code.setCellFactory(new Callback<TableColumn, TableCell>() {
+        codeCol.setCellFactory(new Callback<TableColumn, TableCell>() {
             public TableCell call(TableColumn param) {
                 return new TableCell<Snippet, String>() {
                     @Override
@@ -267,10 +374,7 @@ public class ListSnippets implements View {
 
         Button logout = new Button("Log out");
         logout.setOnAction((_ignore) -> {
-            logic.logout();
-            this.clearFormElements();
-            this.refreshData();
-            ui.toLoginScreen();
+            this.logout(ui);
         });
 
         Button copyBtn = new Button("Copy");
