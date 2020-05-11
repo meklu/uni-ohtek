@@ -80,22 +80,35 @@ public class ListSnippets implements View {
         return stage;
     }
 
+    /** Reloads all relevant db-backed data
+     */
     public void refreshData() {
         this.refreshSnippets();
         this.refreshTags();
     }
 
+
+    /** Reloads snippets via Logic
+     */
     public void refreshSnippets() {
         this.snippets.clear();
         this.snippets.addAll(this.logic.getAvailableSnippets());
     }
 
+    /** Reloads tags via Logic and generates colors for them
+     */
     public void refreshTags() {
         this.tags.clear();
         this.tags.addAll(this.logic.getAvailableTags());
         this.generateTagColors();
     }
 
+
+    /** Copies the code of a snippet to the system clipboard
+     *
+     * @param table The table for our list of snippets
+     * @param ui Our PatkisUi instance
+     */
     private void copyToClipboard(TableView table, PatkisUi ui) {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
@@ -105,6 +118,10 @@ public class ListSnippets implements View {
         }
     }
 
+    /** Prepares a snippet for editing based on table data
+     *
+     * @param table The table for our list of snippets
+     */
     private void editTableSnippet(TableView table) {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
@@ -115,6 +132,10 @@ public class ListSnippets implements View {
         }
     }
 
+    /** Deletes a snippet based on table data
+     *
+     * @param table The table for our list of snippets
+     */
     private void deleteTableSnippet(TableView table) {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
@@ -125,6 +146,10 @@ public class ListSnippets implements View {
         }
     }
 
+    /** A UI method for logging out and doing the related UI cleanup
+     *
+     * @param ui Our PatkisUi instance
+     */
     private void logout(PatkisUi ui) {
         logic.logout();
         this.clearFilter();
@@ -133,18 +158,30 @@ public class ListSnippets implements View {
         ui.toLoginScreen();
     }
 
+    /** Resets the filter
+     */
     private void clearFilter() {
         this.tagFilter.clear();
     }
 
+    /** Adds a Tag to filter for in a logical OR fashion
+     *
+     * @param t The Tag to add to filters
+     */
     private void addFilter(Tag t) {
         this.tagFilter.add(t);
     }
 
+    /** Removes a Tag from filters
+     *
+     * @param t The Tag to remove from filters
+     */
     private void removeFilter(Tag t) {
         this.tagFilter.remove(t);
     }
 
+    /** A UI method for saving/updating the Snippet being handled
+     */
     private void saveOrUpdateSnippet() {
         if (!this.allowEdit) {
             return;
@@ -181,6 +218,9 @@ public class ListSnippets implements View {
         this.refreshData();
     }
 
+    /** A utility method for setting the form to editable or uneditable,
+     * depending on whether we're only allowed to view the record in question
+     */
     private void setAllowEditable() {
         addTitle.setEditable(this.allowEdit);
         addDescription.setEditable(this.allowEdit);
@@ -198,6 +238,8 @@ public class ListSnippets implements View {
         }
     }
 
+    /** A utility method for resetting all form data
+     */
     private void clearFormElements() {
         addTitle.clear();
         addDescription.clear();
@@ -217,6 +259,10 @@ public class ListSnippets implements View {
         this.setAllowEditable();
     }
 
+    /** A UI method for setting up editing in the view
+     *
+     * @param s The Snippet to edit
+     */
     private void startEdit(Snippet s) {
         if (s == null) {
             return;
@@ -243,6 +289,10 @@ public class ListSnippets implements View {
         addTitle.requestFocus();
     }
 
+    /** A UI method for deleting a given snippet with an alert dialog
+     *
+     * @param s The Snippet to delete
+     */
     private void deleteSnippet(Snippet s) {
         if (!s.getOwner().equals(logic.getCurrentUser())) {
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -264,6 +314,11 @@ public class ListSnippets implements View {
         this.refreshData();
     }
 
+    /** Generates colors for all tags known to the application
+     *
+     * @see ListSnippets.tagColors
+     * @see ListSnippets.stringHashToColor()
+     */
     private void generateTagColors() {
         this.tagColors.clear();
         Color fg, bg;
@@ -287,6 +342,14 @@ public class ListSnippets implements View {
         }
     }
 
+    /** Generates a tag box
+     *
+     * @param tags The tags to use for this box
+     * @param add Whether clicking on the items in this box add or remove the tag from filters
+     * @return The generated tag container box
+     * @see ListSnippets.addFilter()
+     * @see ListSnippets.removeFilter()
+     */
     private HBox generateTagBox(Set<Tag> tags, boolean add) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_RIGHT);
@@ -334,7 +397,11 @@ public class ListSnippets implements View {
         return hbox;
     }
 
-    // For autogenerating colors for tags
+    /** For autogenerating colors for tags
+     *
+     * @param str String whose hash code is to be used
+     * @return A tidy color based off that hash code
+     */
     private Color stringHashToColor(String str) {
         // we'll just disregard the top 2 bits
         int hash = str.hashCode();
@@ -345,6 +412,11 @@ public class ListSnippets implements View {
         return Color.color(r/max, g/max, b/max);
     }
 
+    /** Converts a Color to a CSS-style color string
+     *
+     * @param c The color to convert
+     * @return CSS string of the form "rgb(127, 63, 255)"
+     */
     private String colorToString(Color c) {
         return "rgb(" + c.getRed()*255 + "," + c.getGreen()*255 + "," + c.getBlue()*255 + ")";
     }
