@@ -295,6 +295,7 @@ public class ListSnippets implements View {
         Text ts, ta;
         for (Tag t : tags) {
             tc = new HBox();
+            tc.setSpacing(2);
             tc.setAlignment(Pos.CENTER);
             double vpad = 2;
             double hght = 2 * vpad + Font.getDefault().getSize();
@@ -303,10 +304,10 @@ public class ListSnippets implements View {
             tc.setPrefHeight(hght);
             ts = new Text(t.getTag());
             if (add) {
-                ta = new Text("+ ");
+                ta = new Text("+");
                 tc.getChildren().addAll(ta, ts);
             } else {
-                ta = new Text(" ×");
+                ta = new Text("×");
                 tc.getChildren().addAll(ts, ta);
             }
             ta.setStyle("-fx-font-weight: normal;");
