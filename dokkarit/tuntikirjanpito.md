@@ -24,4 +24,5 @@ Pvm   | Aika      | Asia
 11.5. | 1h 10min  | Koodinpätkien suodattaminen tunnisteiden avulla
 11.5. | 40min     | Tunnisteiden lisääminen
 11.5. | 4h 25min  | Siivoilua ja dokumentointia
-…     | 34h 25min | *Yhteensä*
+11.5. | 2h        | Dokumentaation viilaamista
+…     | 36h 25min | *Yhteensä*
