@@ -58,6 +58,8 @@ public class Logic {
      */
     public void logout() {
         this.currentUser = null;
+        // prune unused tags while we're at it
+        this.td.pruneUnused();
     }
 
     /** Registers a user

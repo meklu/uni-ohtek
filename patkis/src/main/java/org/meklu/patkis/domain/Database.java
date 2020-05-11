@@ -158,15 +158,17 @@ public class Database {
     /** Finds rows where the given fields match the given values according to the provided operator
      *
      * @param table The table to query
+     * @param extraSelect Additional SELECT fields
      * @param whereFields The fields to check against in (field, operator, value) form, e.g. ("name", "LIKE", "%ant%")
      * @param additionalOrders Additional SQL command structuring after the WHERE clause
      * @return Possibly a ResultSet
      */
-    public ResultSet findWhere(String table, List<Triple<String, String, String>> whereFields, List<String> additionalOrders) {
+    public ResultSet findWhere(String table, List<String> extraSelect, List<Triple<String, String, String>> whereFields, List<String> additionalOrders) {
         try {
             String frepl = String.join(" AND ", whereFields.stream().map(f -> f.getA() + " " + f.getB() + " ?").collect(Collectors.toList()));
+            String exsel = extraSelect.isEmpty() ? "" : extraSelect.stream().map(s -> ", " + s).reduce("", (a, b) -> a + b);
             String addtl = String.join(" ", additionalOrders);
-            String query = "SELECT * FROM " + table + (!whereFields.isEmpty() ? " WHERE " + frepl : "") + " " + addtl;
+            String query = "SELECT * " + exsel + " FROM " + table + (!whereFields.isEmpty() ? " WHERE " + frepl : "") + " " + addtl;
             PreparedStatement stmt = conn.prepareStatement(query);
             for (int i = 1; i <= whereFields.size(); ++i) {
                 Triple<String, String, String> t = whereFields.get(i - 1);
@@ -175,6 +177,17 @@ public class Database {
             return stmt.executeQuery();
         } catch (Exception e) {}
         return null;
+    }
+
+    /** Finds rows where the given fields match the given values according to the provided operator
+     *
+     * @param table The table to query
+     * @param whereFields The fields to check against in (field, operator, value) form, e.g. ("name", "LIKE", "%ant%")
+     * @param additionalOrders Additional SQL command structuring after the WHERE clause
+     * @return Possibly a ResultSet
+     */
+    public ResultSet findWhere(String table, List<Triple<String, String, String>> whereFields, List<String> additionalOrders) {
+        return this.findWhere(table, List.of(), whereFields, additionalOrders);
     }
 
     /** Finds rows where the given fields match the given values according to the provided operator

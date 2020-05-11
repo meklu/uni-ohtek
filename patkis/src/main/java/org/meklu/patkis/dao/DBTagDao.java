@@ -165,4 +165,36 @@ public class DBTagDao extends DBDao<Tag> implements TagDao {
         fields.add(new Pair("tagger_id", "" + u.getId()));
         return this.db.delete("tags_snippets", fields);
     }
+
+    @Override
+    public boolean pruneUnused() {
+        ResultSet rs = this.db.findWhere(
+            this.tableName(),
+            List.of(
+                "tags.id AS prune_id",
+                "COUNT(tag_id) AS refcount"
+            ),
+            List.of(),
+            List.of(
+                "LEFT JOIN tags_snippets ON tags.id = tags_snippets.tag_id",
+                "GROUP BY prune_id",
+                "HAVING refcount = 0"
+            )
+        );
+        List<Integer> pruneIds = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                pruneIds.add(rs.getInt("prune_id"));
+            }
+        } catch (Exception e) {
+            System.out.println("failed to retrieve prunable tags");
+            return false;
+        }
+        boolean ret = true;
+        for (int id : pruneIds) {
+            System.out.println("pruning tag id " + id);
+            ret = ret && this.db.delete(this.tableName(), List.of(new Pair<>("id", "" + id)));
+        }
+        return ret;
+    }
 }

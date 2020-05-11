@@ -43,4 +43,10 @@ public interface TagDao extends Dao<Tag> {
      * @return Whether we succeeded or not
      */
     boolean unlinkFromSnippet(Tag t, Snippet s, User u);
+
+    /** Prunes (deletes) all unused tags
+     *
+     * @return Whether we succeeded or not
+     */
+    boolean pruneUnused();
 }
