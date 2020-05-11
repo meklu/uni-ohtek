@@ -21,7 +21,6 @@ suurempioikeuksista sisällönhallintaa.
 
 - [x] Käyttäjä voi luoda käyttäjätunnuksen
 	- [x] tunnuksen täytyy olla uniikki
-	- [ ] ja vähintään `n` -merkkinen
 - [x] Käyttäjä voi kirjautua sisään
 	- [x] kirjautuminen tapahtuu kirjoittamalla tunnukset
 	  kirjautumislomakkeeseen
