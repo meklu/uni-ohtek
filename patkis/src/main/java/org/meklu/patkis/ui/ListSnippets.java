@@ -197,7 +197,6 @@ public class ListSnippets implements View {
         s.setSnippet(addSnippet.getText());
         s.setPublic(addPublic.isSelected());
         String[] tstrs = addTags.getText().split("\\s+");
-        System.out.println("tstrs: " + Arrays.toString(tstrs));
         for (String tstr : tstrs) {
             if (tstr.isEmpty()) {
                 continue;
