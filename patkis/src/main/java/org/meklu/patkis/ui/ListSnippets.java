@@ -181,6 +181,7 @@ public class ListSnippets implements View {
     private void setAllowEditable() {
         addTitle.setEditable(this.allowEdit);
         addDescription.setEditable(this.allowEdit);
+        addTags.setEditable(this.allowEdit);
         addSnippet.setEditable(this.allowEdit);
         addPublic.setDisable(!this.allowEdit);
         addBtn.setVisible(allowEdit);

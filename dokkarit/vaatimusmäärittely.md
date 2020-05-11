@@ -36,8 +36,8 @@ suurempioikeuksista sisällönhallintaa.
 	  käyttäjälle itselleen
 - [x] Käyttäjä voi päivittää koodinpätkän tiedot
 	- [x] vain omille koodinpätkilleen
-- [x] Käyttäjä voi asettaa koodinpätkälle sanamuotoisia *tunnisteita*, jotka
-  auttavat oikean koodinpätkän löytämisessä
+- [x] Käyttäjä voi asettaa omalle koodinpätkälleen sanamuotoisia *tunnisteita*,
+  jotka auttavat oikean koodinpätkän löytämisessä
 	- [x] tunnisteilla on automaattisesti generoitu väri
 	- tunniste voi olla esim. jokin seuraavista:
 		- ohjelmointikieli
@@ -52,6 +52,8 @@ suurempioikeuksista sisällönhallintaa.
 - Käyttäjä voi etsiä koodinpätkiä vapaalla tekstihaulla
 	- myös otsikon mukaan
 - Mahdollisuus tallentaa koodinpätkiä suosikkilistaan
+- Mahdollisuus asettaa tunnisteita myös muiden kuin oman käyttäjän julkisille
+  koodinpätkille
 - Lisää granulaarisuutta näkyvyyteen, esim. käyttäjäryhmäkohtaiset
   näkyvyysasetukset voisivat olla hyödyllisiä
 - Jos aikaa on maailmassa aivan rutosti liikaa, voisi koodinpätkille tehdä
