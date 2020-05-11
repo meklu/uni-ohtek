@@ -66,7 +66,7 @@ tarkastelua varten myös kaksoisnapsauttamalla sitä hiirellä.
 
 Tässä on kolmen kuvan kuvasarja koodinpätkän muokkaamisesta:
 
-Aloitamme avaamalla haluttu koodinpätkä.
+Aloitamme avaamalla halutun koodinpätkän.
 
 ![Koodinpätkän muokkaamisen aloitus](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/manual/patkis-edit-pre.png)
 
@@ -89,6 +89,13 @@ olevasta esimerkistä voidaan huomata:
 Ohjelma mahdollistaa myös koodinpätkien suodattamisen tunnisteiden perusteella.
 Suodatus toimii sillä periaatteella, että kaikki mihin tahansa valittuun
 suodattimeen liittyvät koodinpätkät näytetään.
+
+Suodattimia voi lisätä napsauttamalla hiirellä koodinpätkälistauksessa
+esiintyvää tunnistetta. Nämä tunnistaa tunnistetta edeltävästä plus-merkistä.
+
+Suodattimien poistaminen tapahtuu napsauttamalla hiirellä ruudun yläreunassa
+sijaitsevassa suodatinlistauksessa esiintyvää tunnistetta. Nämä tunnistaa
+tunnisteen perässä olevasta ruksista.
 
 ![Suodattimet toiminnassa](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/manual/patkis-filters.png)
 
