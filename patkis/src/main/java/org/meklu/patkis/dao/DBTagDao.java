@@ -117,7 +117,7 @@ public class DBTagDao extends DBDao<Tag> implements TagDao {
             System.err.println("tried to link a tag to an unsaved snippet");
             return false;
         }
-        if (s.getId() == -1) {
+        if (u.getId() == -1) {
             System.err.println("tried to link a tag for an unsaved user");
             return false;
         }
@@ -155,7 +155,7 @@ public class DBTagDao extends DBDao<Tag> implements TagDao {
             System.err.println("tried to unlink a tag from an unsaved snippet");
             return true;
         }
-        if (s.getId() == -1) {
+        if (u.getId() == -1) {
             System.err.println("tried to unlink a tag for an unsaved user");
             return true;
         }
@@ -186,15 +186,15 @@ public class DBTagDao extends DBDao<Tag> implements TagDao {
             while (rs.next()) {
                 pruneIds.add(rs.getInt("prune_id"));
             }
+            boolean ret = true;
+            for (int id : pruneIds) {
+                System.out.println("pruning tag id " + id);
+                ret = this.db.delete(this.tableName(), List.of(new Pair<>("id", "" + id))) && ret;
+            }
+            return ret;
         } catch (Exception e) {
             System.out.println("failed to retrieve prunable tags");
-            return false;
         }
-        boolean ret = true;
-        for (int id : pruneIds) {
-            System.out.println("pruning tag id " + id);
-            ret = ret && this.db.delete(this.tableName(), List.of(new Pair<>("id", "" + id)));
-        }
-        return ret;
+        return false;
     }
 }
