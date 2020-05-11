@@ -23,6 +23,11 @@ abstract public class DBDao<T> implements Dao<T> {
         this.db = db;
     }
 
+    /** Gets the backing database table name for the model
+     *
+     * @return The name of the database table for the model */
+    abstract String tableName();
+
     @Override
     public T find(String field, String value) {
         ResultSet rs = db.find(this.tableName(), field, value);

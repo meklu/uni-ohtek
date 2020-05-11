@@ -10,11 +10,6 @@ import org.meklu.patkis.domain.Triple;
  * @param <T> The type of data model to deal with
  */
 public interface Dao<T> {
-    /** Gets the backing database table name for the model
-     *
-     * @return The name of the database table for the model */
-    String tableName();
-
     /** Saves an object in the database
      *
      * @param obj The object to be saved
