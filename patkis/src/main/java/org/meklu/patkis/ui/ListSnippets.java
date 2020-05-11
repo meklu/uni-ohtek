@@ -112,7 +112,7 @@ public class ListSnippets implements View {
     private void copyToClipboard(TableView table, PatkisUi ui) {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
-            ui.copyToClipboard(this.snippets.get(row).getSnippet());
+            ui.copyToClipboard(this.snippetsFiltered.get(row).getSnippet());
         } catch (Exception e) {
             System.out.println("failed to copy item to clipboard, possibly no focus");
         }
@@ -126,7 +126,7 @@ public class ListSnippets implements View {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
             this.clearFormElements();
-            this.startEdit(this.snippets.get(row));
+            this.startEdit(this.snippetsFiltered.get(row));
         } catch (Exception e) {
             System.out.println("failed to start snippet edit, possibly no focus");
         }
@@ -140,7 +140,7 @@ public class ListSnippets implements View {
         try {
             int row = table.getFocusModel().getFocusedCell().getRow();
             this.clearFormElements();
-            this.deleteSnippet(this.snippets.get(row));
+            this.deleteSnippet(this.snippetsFiltered.get(row));
         } catch (Exception e) {
             System.out.println("failed to delete snippet, possibly no focus");
         }
