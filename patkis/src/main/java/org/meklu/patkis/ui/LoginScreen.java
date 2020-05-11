@@ -1,6 +1,7 @@
 
 package org.meklu.patkis.ui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import org.meklu.patkis.domain.Logic;
 
@@ -71,6 +72,7 @@ public class LoginScreen implements View {
 
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(7);
+        layout.setPadding(new Insets(7));
         layout.getChildren().addAll(userLabel, userField, loginRegisterRow, resetButton);
     }
 }

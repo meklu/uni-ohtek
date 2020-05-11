@@ -1,6 +1,8 @@
 
 package org.meklu.patkis.ui;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -51,6 +53,9 @@ public class RegisterUser implements View {
             ui.toLoginScreen();
         });
 
+        layout.setAlignment(Pos.CENTER);
+        layout.setSpacing(7);
+        layout.setPadding(new Insets(7));
         layout.getChildren().addAll(userLabel, userField, registerButton, backButton);
     }
 }

@@ -423,7 +423,7 @@ public class ListSnippets implements View {
     ListSnippets(PatkisUi ui) {
         logic = ui.logic;
         VBox layout = new VBox();
-        Scene scene = new Scene(layout, 512.0, 512.0);
+        Scene scene = new Scene(layout, 768.0, 512.0);
         this.stage.setScene(scene);
         this.stage.setTitle("Snippets - Pätkis");
 
