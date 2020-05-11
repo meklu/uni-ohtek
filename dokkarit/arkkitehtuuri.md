@@ -94,3 +94,14 @@ Tässä vaiheessa suoritus valuu takaisin aina käyttöliittymään asti ja lopu
 ruudulle piirtyy päivitetty näkymä.
 
 ![Tallennussekvenssikaavio](https://raw.githubusercontent.com/meklu/uni-ohtek/master/imgs/architecture/snippet-creation.png)
+
+## Ohjelman rakenteen heikkouksia
+
+Ohjelmassa käytetään hieman turhankin usein tietokantakyselyjä isoilla
+datamäärillä. Suuremmilla koodinpätkätietokannoilla muistin kulutus ja
+sovelluksen hitaus dataa jatkuvasti uudelleenladattaessa voivat olla ongelmia.
+
+Käyttöliittymä on jokseenkin monoliittinen ydintoiminnallisuuden kannalta,
+joten suuremmat laajentelut vaatisivat vaihtelevissa määrin työtä. Koodi
+ei kuitenkaan ole kirjoittajansa silmään erityisen pahaa purkkaa, joten asia
+ei kuulosta kovinkaan ylitsepääsemättömältä.

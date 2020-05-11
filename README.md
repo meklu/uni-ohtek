@@ -10,6 +10,8 @@ Tämän harjoitustyön aiheena on koodinpätkämanageri.
 
 [Käyttöohje](https://github.com/meklu/uni-ohtek/blob/master/dokkarit/käyttöohje.md)
 
+[Testausdokumentti](https://github.com/meklu/uni-ohtek/blob/master/dokkarit/testausdokumentti.md)
+
 # Releaset
 
 [Viikko 5](https://github.com/meklu/uni-ohtek/releases/tag/viikko5.1)

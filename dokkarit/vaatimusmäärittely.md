@@ -48,11 +48,16 @@ suurempioikeuksista sisällönhallintaa.
 
 ## Jatkokehitysideoita
 
-- Käyttäjä voi etsiä koodinpätkiä vapaalla tekstihaulla
-	- myös otsikon mukaan
-- Mahdollisuus tallentaa koodinpätkiä suosikkilistaan
 - Mahdollisuus asettaa tunnisteita myös muiden kuin oman käyttäjän julkisille
   koodinpätkille
+	- tämä on periaatteessa jo mahdollista taustajärjestelmässä, mutta
+	  vaatisi yli kolmetoista sekuntia kehitysaikaa käyttöliittymän
+	  suhteen, eritoten käyttäjäystävällisyyden kohdalla
+- Salasanasuojaus käyttäjätileille
+	- tietokantarakenne mahdollistaisi tämän jo
+- Koodinpätkien vapaa tekstihaku
+	- myös otsikon mukaan
+- Mahdollisuus tallentaa koodinpätkiä suosikkilistaan
 - Lisää granulaarisuutta näkyvyyteen, esim. käyttäjäryhmäkohtaiset
   näkyvyysasetukset voisivat olla hyödyllisiä
 - Jos aikaa on maailmassa aivan rutosti liikaa, voisi koodinpätkille tehdä

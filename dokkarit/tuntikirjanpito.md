@@ -25,4 +25,5 @@ Pvm   | Aika      | Asia
 11.5. | 40min     | Tunnisteiden lisääminen
 11.5. | 4h 25min  | Siivoilua ja dokumentointia
 11.5. | 2h        | Dokumentaation viilaamista
-…     | 36h 25min | *Yhteensä*
+11.5. | 2h 5min   | Lisää dokumentaatiota, mukaanlukien testausdokumentti
+…     | 38h 30min | *Yhteensä*
