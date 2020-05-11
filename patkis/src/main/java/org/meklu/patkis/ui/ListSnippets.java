@@ -159,6 +159,9 @@ public class ListSnippets implements View {
         String[] tstrs = addTags.getText().split("\\s+");
         System.out.println("tstrs: " + Arrays.toString(tstrs));
         for (String tstr : tstrs) {
+            if (tstr.isEmpty()) {
+                continue;
+            }
             Tag t = new Tag(tstr);
             logic.createTag(t);
             s.addTag(t);
