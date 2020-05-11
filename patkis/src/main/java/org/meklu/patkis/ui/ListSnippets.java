@@ -2,6 +2,7 @@
 package org.meklu.patkis.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -57,11 +58,13 @@ public class ListSnippets implements View {
 
     private TextField addTitle;
     private TextField addDescription;
+    private TextField addTags;
     private TextArea addSnippet;
     private CheckBox addPublic;
     private Button addBtn;
     private Button cancelBtn;
     private Snippet editSnippet = null;
+    private Set<Tag> oldUserTags = null;
     private boolean allowEdit = true;
 
     private final String addStr = "Add snippet";
@@ -153,6 +156,13 @@ public class ListSnippets implements View {
         s.setDescription(addDescription.getText());
         s.setSnippet(addSnippet.getText());
         s.setPublic(addPublic.isSelected());
+        String[] tstrs = addTags.getText().split("\\s+");
+        System.out.println("tstrs: " + Arrays.toString(tstrs));
+        for (String tstr : tstrs) {
+            Tag t = new Tag(tstr);
+            logic.createTag(t);
+            s.addTag(t);
+        }
         boolean succ;
         if (s.getId() == -1) {
             succ = logic.createSnippet(s);
@@ -184,9 +194,14 @@ public class ListSnippets implements View {
     private void clearFormElements() {
         addTitle.clear();
         addDescription.clear();
+        addTags.clear();
         addSnippet.clear();
         addPublic.setSelected(false);
         addBtn.setText(addStr);
+        if (this.allowEdit && this.editSnippet != null) {
+            this.editSnippet.setUserTags(this.oldUserTags);
+            this.editSnippet.setUnlinkTags(new HashSet<>());
+        }
         this.editSnippet = null;
         cancelBtn.setVisible(false);
         cancelBtn.setManaged(false);
@@ -206,6 +221,13 @@ public class ListSnippets implements View {
         this.editSnippet = s;
         addTitle.setText(s.getTitle());
         addDescription.setText(s.getDescription());
+        // To facilitate tag editing, we take our user-defined tags and unlink them all without saving
+        addTags.setText(String.join(" ", s.getUserTags().stream().map(t -> t.getTag()).collect(Collectors.toList())));
+        if (this.allowEdit) {
+            this.oldUserTags = s.getUserTags().stream().collect(Collectors.toSet());
+            s.setUnlinkTags(s.getUserTags());
+            s.setUserTags(new HashSet<>());
+        }
         addSnippet.setText(s.getSnippet());
         addPublic.setSelected(s.isPublic());
         addBtn.setText(updateStr);
@@ -447,6 +469,7 @@ public class ListSnippets implements View {
                 boolean fff = s.getTags().stream().anyMatch(t -> tagFilter.contains(t));
                 return isE || fff;
             });
+            table.autosize();
         });
 
         menubar.getChildren().addAll(copyBtn, editBtn, deleteBtn, filterBox, menuPad, logout);
@@ -492,6 +515,10 @@ public class ListSnippets implements View {
         addDescription.setPromptText("Description");
         addDescription.setFocusTraversable(true);
 
+        addTags = new TextField();
+        addTags.setPromptText("Tags");
+        addTags.setFocusTraversable(true);
+
         addSnippet = new TextArea();
         addSnippet.setPromptText("<code>");
         addSnippet.setFocusTraversable(true);
@@ -517,6 +544,9 @@ public class ListSnippets implements View {
             addDescription.requestFocus();
         });
         addDescription.setOnAction(e -> {
+            addTags.requestFocus();
+        });
+        addTags.setOnAction(e -> {
             addSnippet.requestFocus();
         });
 
@@ -535,7 +565,7 @@ public class ListSnippets implements View {
         adderFoot.setSpacing(6);
         adderFoot.setAlignment(Pos.CENTER_LEFT);
 
-        adder.getChildren().addAll(addTitle, addDescription, addSnippet, adderFoot);
+        adder.getChildren().addAll(addTitle, addDescription, addTags, addSnippet, adderFoot);
 
         layout.getChildren().addAll(menubar, table, adder);
 

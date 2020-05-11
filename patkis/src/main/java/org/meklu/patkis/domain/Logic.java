@@ -75,6 +75,20 @@ public class Logic {
         this.db.reset();
     }
 
+    /** Creates a Tag according to the given object
+     *
+     * @param t Tag to be created
+     */
+    public boolean createTag(Tag t) {
+        Tag ck = this.td.findByTag(t.getTag());
+        if (ck != null) {
+            t.setId(ck.getId());
+            t.setTag(ck.getTag());
+            return true;
+        }
+        return this.td.save(t);
+    }
+
     /** Gets the Snippets visible to the current user
      *
      * @return The list of Snippets available

@@ -1,7 +1,6 @@
 
 package org.meklu.patkis.dao;
 
-import java.util.List;
 import java.util.Set;
 import org.meklu.patkis.domain.Snippet;
 import org.meklu.patkis.domain.Tag;

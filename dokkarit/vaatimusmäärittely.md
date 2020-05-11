@@ -36,13 +36,14 @@ suurempioikeuksista sisällönhallintaa.
 	  käyttäjälle itselleen
 - [x] Käyttäjä voi päivittää koodinpätkän tiedot
 	- [x] vain omille koodinpätkilleen
-- [ ] Käyttäjä voi asettaa koodinpätkälle sanamuotoisia *tunnisteita*, jotka
+- [x] Käyttäjä voi asettaa koodinpätkälle sanamuotoisia *tunnisteita*, jotka
   auttavat oikean koodinpätkän löytämisessä
+	- [x] tunnisteilla on automaattisesti generoitu väri
 	- tunniste voi olla esim. jokin seuraavista:
 		- ohjelmointikieli
 		- aihealue
 		- jokin muu erittäin kuvaava deskriptori
-- [ ] Käyttäjä voi selata koodinpätkiä tunnisteiden mukaan
+- [x] Käyttäjä voi selata koodinpätkiä tunnisteiden mukaan
 - [x] Käyttäjä voi poistaa luomansa koodinpätkän
 - [x] Käyttäjä voi kirjautua ulos
 
@@ -53,8 +54,6 @@ suurempioikeuksista sisällönhallintaa.
 - Mahdollisuus tallentaa koodinpätkiä suosikkilistaan
 - Lisää granulaarisuutta näkyvyyteen, esim. käyttäjäryhmäkohtaiset
   näkyvyysasetukset voisivat olla hyödyllisiä
-- Tunnisteille voisi asettaa tunnistekohtaisen värin tai esimerkiksi
-  automaattisesti tunnistetekstin pohjalta generoidun sellaisen
 - Jos aikaa on maailmassa aivan rutosti liikaa, voisi koodinpätkille tehdä
   kommentointimahdollisuuden
 - Jos aikaa on vähemmän, mutta paljon, voisi tehdä someista tutun

@@ -22,4 +22,5 @@ Pvm   | Aika      | Asia
 11.5. | 1h 50min  | Koodinpätkän poistamistoiminto ja kälin siistimistä
 11.5. | 1h 55min  | Tunnisteiden alustava näyttäminen koodinpätkänäkymässä
 11.5. | 1h 10min  | Koodinpätkien suodattaminen tunnisteiden avulla
-…     | 29h 20min | *Yhteensä*
+11.5. | 40min     | Tunnisteiden lisääminen
+…     | 30h       | *Yhteensä*
