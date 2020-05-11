@@ -23,4 +23,5 @@ Pvm   | Aika      | Asia
 11.5. | 1h 55min  | Tunnisteiden alustava näyttäminen koodinpätkänäkymässä
 11.5. | 1h 10min  | Koodinpätkien suodattaminen tunnisteiden avulla
 11.5. | 40min     | Tunnisteiden lisääminen
-…     | 30h       | *Yhteensä*
+11.5. | 4h 25min  | Siivoilua ja dokumentointia
+…     | 34h 25min | *Yhteensä*
