@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -38,6 +39,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import org.meklu.patkis.domain.Logic;
 
 import javafx.stage.Stage;
@@ -288,10 +291,26 @@ public class ListSnippets implements View {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_RIGHT);
         hbox.setSpacing(3);
-        Label tl;
+        HBox tc;
+        Text ts, ta;
         for (Tag t : tags) {
-            tl = new Label(t.getTag());
-            tl.setOnMouseClicked(e -> {
+            tc = new HBox();
+            tc.setAlignment(Pos.CENTER);
+            double vpad = 2;
+            double hght = 2 * vpad + Font.getDefault().getSize();
+            tc.setMinHeight(hght);
+            tc.setMaxHeight(hght);
+            tc.setPrefHeight(hght);
+            ts = new Text(t.getTag());
+            if (add) {
+                ta = new Text("+ ");
+                tc.getChildren().addAll(ta, ts);
+            } else {
+                ta = new Text(" ×");
+                tc.getChildren().addAll(ts, ta);
+            }
+            ta.setStyle("-fx-font-weight: normal;");
+            tc.setOnMouseClicked(e -> {
                 if (add) {
                     addFilter(t);
                 } else {
@@ -299,17 +318,17 @@ public class ListSnippets implements View {
                 }
             });
             Pair<Color, Color> colors =  tagColors.get(t);
-            tl.setStyle(
+            tc.setStyle(
                 "-fx-text-fill: " + colorToString(colors.getA()) + ";" +
                 "-fx-border-color: " + colorToString(colors.getA()) + ";" +
                 "-fx-background-color: " + colorToString(colors.getB()) + ";" +
-                "-fx-padding: 0 2;" +
+                "-fx-padding: 0 " + vpad + ";" +
                 "-fx-font-weight: bold;" +
                 "-fx-font-family: sans-serif;" +
                 "-fx-background-radius: 6;" +
                 "-fx-border-radius: 5;"
             );
-            hbox.getChildren().add(tl);
+            hbox.getChildren().add(tc);
         }
         return hbox;
     }
