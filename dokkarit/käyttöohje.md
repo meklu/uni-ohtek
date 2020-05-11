@@ -103,6 +103,8 @@ tunnisteen perässä olevasta ruksista.
 
 `<Enter>`: Avaa valittu koodinpätkä
 
+`<Delete>`: Poista valittu koodinpätkä
+
 `<Ctrl>` + `C`: Kopioi valitun koodinpätkän koodi leikepöydälle
 
 `<Ctrl>` + `S`: Tallenna käsittelyssä oleva koodinpätkä

@@ -26,4 +26,5 @@ Pvm   | Aika      | Asia
 11.5. | 4h 25min  | Siivoilua ja dokumentointia
 11.5. | 2h        | Dokumentaation viilaamista
 11.5. | 2h 5min   | Lisää dokumentaatiota, mukaanlukien testausdokumentti
-…     | 38h 30min | *Yhteensä*
+11.5. | 30min     | Viimeiset viilaukset
+…     | 39h       | *Yhteensä*
