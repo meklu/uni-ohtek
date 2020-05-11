@@ -574,15 +574,15 @@ public class ListSnippets implements View {
         table.setContextMenu(ctxmenu);
 
         MenuItem copyCtx = new MenuItem("Copy to clipboard");
-        copyCtx.setOnAction(copyBtn.getOnAction());
+        copyCtx.setOnAction(e -> this.copyToClipboard(table, ui));
         ctxmenu.getItems().addAll(copyCtx);
 
         MenuItem editCtx = new MenuItem("View/edit snippet");
-        editCtx.setOnAction(editBtn.getOnAction());
+        editCtx.setOnAction(e -> this.editTableSnippet(table));
         ctxmenu.getItems().addAll(editCtx);
 
         MenuItem deleteCtx = new MenuItem("Delete snippet");
-        editCtx.setOnAction(deleteBtn.getOnAction());
+        deleteCtx.setOnAction(e -> this.deleteTableSnippet(table));
         ctxmenu.getItems().addAll(deleteCtx);
 
         KeyCodeCombination copyKCC = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
