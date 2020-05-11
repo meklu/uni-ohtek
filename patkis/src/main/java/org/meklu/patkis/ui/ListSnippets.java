@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
+import javafx.collections.transformation.FilteredList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -44,6 +48,8 @@ import org.meklu.patkis.domain.Tag;
 public class ListSnippets implements View {
     private final Stage stage = new Stage();
     private final ObservableList<Snippet> snippets;
+    private final FilteredList<Snippet> snippetsFiltered;
+    private final ObservableSet<Tag> tagFilter;
     private final ObservableSet<Tag> tags;
     // pairs of (foreground, background)
     private final Map<Tag, Pair<Color, Color>> tagColors;
@@ -115,9 +121,22 @@ public class ListSnippets implements View {
 
     private void logout(PatkisUi ui) {
         logic.logout();
+        this.clearFilter();
         this.clearFormElements();
         this.refreshData();
         ui.toLoginScreen();
+    }
+
+    private void clearFilter() {
+        this.tagFilter.clear();
+    }
+
+    private void addFilter(Tag t) {
+        this.tagFilter.add(t);
+    }
+
+    private void removeFilter(Tag t) {
+        this.tagFilter.remove(t);
     }
 
     private void saveOrUpdateSnippet() {
@@ -239,6 +258,36 @@ public class ListSnippets implements View {
         }
     }
 
+    private HBox generateTagBox(Set<Tag> tags, boolean add) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER_RIGHT);
+        hbox.setSpacing(3);
+        Label tl;
+        for (Tag t : tags) {
+            tl = new Label(t.getTag());
+            tl.setOnMouseClicked(e -> {
+                if (add) {
+                    addFilter(t);
+                } else {
+                    removeFilter(t);
+                }
+            });
+            Pair<Color, Color> colors =  tagColors.get(t);
+            tl.setStyle(
+                "-fx-text-fill: " + colorToString(colors.getA()) + ";" +
+                "-fx-border-color: " + colorToString(colors.getA()) + ";" +
+                "-fx-background-color: " + colorToString(colors.getB()) + ";" +
+                "-fx-padding: 0 2;" +
+                "-fx-font-weight: bold;" +
+                "-fx-font-family: sans-serif;" +
+                "-fx-background-radius: 6;" +
+                "-fx-border-radius: 5;"
+            );
+            hbox.getChildren().add(tl);
+        }
+        return hbox;
+    }
+
     // For autogenerating colors for tags
     private Color stringHashToColor(String str) {
         // we'll just disregard the top 2 bits
@@ -282,6 +331,8 @@ public class ListSnippets implements View {
         this.snippets = FXCollections.observableArrayList(
             new ArrayList<>()
         );
+        this.snippetsFiltered = new FilteredList<>(this.snippets);
+        this.tagFilter = FXCollections.observableSet(new HashSet<>());
         this.tags = FXCollections.observableSet(
             new HashSet<>()
         );
@@ -302,26 +353,7 @@ public class ListSnippets implements View {
                             this.setGraphic(null);
                             return;
                         }
-                        HBox hbox = new HBox();
-                        hbox.setAlignment(Pos.CENTER_RIGHT);
-                        hbox.setSpacing(3);
-                        Label tl;
-                        for (Tag t : item) {
-                            tl = new Label(t.getTag());
-                            Pair<Color, Color> colors =  tagColors.get(t);
-                            tl.setStyle(
-                                "-fx-text-fill: " + colorToString(colors.getA()) + ";" +
-                                "-fx-border-color: " + colorToString(colors.getA()) + ";" +
-                                "-fx-background-color: " + colorToString(colors.getB()) + ";" +
-                                "-fx-padding: 0 2;" +
-                                "-fx-font-weight: bold;" +
-                                "-fx-font-family: sans-serif;" +
-                                "-fx-background-radius: 6;" +
-                                "-fx-border-radius: 5;"
-                            );
-                            hbox.getChildren().add(tl);
-                        }
-                        this.setGraphic(hbox);
+                        this.setGraphic(generateTagBox(item, true));
                         this.setAlignment(Pos.CENTER_RIGHT);
                     }
                 };
@@ -368,7 +400,7 @@ public class ListSnippets implements View {
             }
         });
 
-        table.setItems(this.snippets);
+        table.setItems(this.snippetsFiltered);
 
         HBox menubar = new HBox();
 
@@ -392,10 +424,32 @@ public class ListSnippets implements View {
             this.deleteTableSnippet(table);
         });
 
+        HBox filterBox = new HBox();
+        filterBox.setAlignment(Pos.CENTER_LEFT);
+        filterBox.setSpacing(7);
+        filterBox.setPadding(new Insets(0, 7, 0, 7));
+
         Region menuPad = new Region();
         HBox.setHgrow(menuPad, Priority.ALWAYS);
 
-        menubar.getChildren().addAll(copyBtn, editBtn, deleteBtn, menuPad, logout);
+        this.tagFilter.addListener((InvalidationListener) (e) -> {
+            filterBox.getChildren().clear();
+            if (!this.tagFilter.isEmpty()) {
+                filterBox.getChildren().add(new Label("Filters:"));
+                HBox tagBox = generateTagBox(
+                    this.tagFilter.stream().collect(Collectors.toSet()),
+                    false
+                );
+                filterBox.getChildren().add(tagBox);
+            }
+            this.snippetsFiltered.setPredicate(s -> {
+                boolean isE = tagFilter.isEmpty();
+                boolean fff = s.getTags().stream().anyMatch(t -> tagFilter.contains(t));
+                return isE || fff;
+            });
+        });
+
+        menubar.getChildren().addAll(copyBtn, editBtn, deleteBtn, filterBox, menuPad, logout);
         menubar.autosize();
 
         ContextMenu ctxmenu = new ContextMenu();
