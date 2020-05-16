@@ -103,6 +103,18 @@ public class ListSnippets implements View {
         this.generateTagColors();
     }
 
+    /** Gets the focused snippet
+     *
+     * @param table The table for our list of snippets
+     * @return The focused snippet, if any, null otherwise
+     */
+    private Snippet getFocusedSnippet(TableView table) {
+        try {
+            int row = table.getFocusModel().getFocusedCell().getRow();
+            return (Snippet) table.getItems().get(row);
+        } catch (Exception e) {}
+        return null;
+    }
 
     /** Copies the code of a snippet to the system clipboard
      *
@@ -110,10 +122,10 @@ public class ListSnippets implements View {
      * @param ui Our PatkisUi instance
      */
     private void copyToClipboard(TableView table, PatkisUi ui) {
-        try {
-            int row = table.getFocusModel().getFocusedCell().getRow();
-            ui.copyToClipboard(this.snippetsFiltered.get(row).getSnippet());
-        } catch (Exception e) {
+        Snippet s = this.getFocusedSnippet(table);
+        if (s != null) {
+            ui.copyToClipboard(s.getSnippet());
+        } else {
             System.out.println("failed to copy item to clipboard, possibly no focus");
         }
     }
@@ -123,11 +135,11 @@ public class ListSnippets implements View {
      * @param table The table for our list of snippets
      */
     private void editTableSnippet(TableView table) {
-        try {
-            int row = table.getFocusModel().getFocusedCell().getRow();
+        Snippet s = this.getFocusedSnippet(table);
+        if (s != null) {
             this.clearFormElements();
-            this.startEdit(this.snippetsFiltered.get(row));
-        } catch (Exception e) {
+            this.startEdit(s);
+        } else {
             System.out.println("failed to start snippet edit, possibly no focus");
         }
     }
@@ -137,11 +149,11 @@ public class ListSnippets implements View {
      * @param table The table for our list of snippets
      */
     private void deleteTableSnippet(TableView table) {
-        try {
-            int row = table.getFocusModel().getFocusedCell().getRow();
+        Snippet s = this.getFocusedSnippet(table);
+        if (s != null) {
             this.clearFormElements();
-            this.deleteSnippet(this.snippetsFiltered.get(row));
-        } catch (Exception e) {
+            this.deleteSnippet(s);
+        } else {
             System.out.println("failed to delete snippet, possibly no focus");
         }
     }
